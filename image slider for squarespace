@@ -1,0 +1,46 @@
+<!-- Image Slider -->
+
+<script>
+$(window).load(function() {
+$(".sqs-gallery-block-stacked").rebeccagrace();
+});
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+  .ProductList-grid .ProductList-item {
+    padding-bottom: 70px;
+  }
+  .ProductList-grid .ProductList-item .sqs-add-to-cart-button {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    margin: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .ProductList-grid .ProductList-item .ProductList-overlay {
+   margin-bottom: 70px; 
+  }
+</style>
+
+<script>
+  $(".ProductList-grid .ProductList-item").each(function(e){
+    $(this).append('<div class="sqs-add-to-cart-button sqs-suppress-edit-mode sqs-editable-button" role="button" tabindex="0" data-product-type="1" data-original-label="Add To Cart"><div class="sqs-add-to-cart-button-inner">Add To Cart</div></div>');
+  });
+  $(function() {
+    $(".ProductList-grid .ProductList-item").each(function(e){
+      var dataItemId = $(this).attr('data-item-id');
+      $(this).find('.sqs-add-to-cart-button').attr('data-item-id', dataItemId);
+    });
+  });
+</script>
+
+
+<!-- End of Image Slider -->
+
+CUSTOM BLACK IMAGE UI
