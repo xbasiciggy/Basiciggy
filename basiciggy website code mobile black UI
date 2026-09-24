@@ -1,0 +1,7730 @@
+<!-- Image Slider -->
+
+<script>
+$(window).load(function() {
+$(".sqs-gallery-block-stacked").rebeccagrace();
+});
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+  .ProductList-grid .ProductList-item {
+    padding-bottom: 70px;
+  }
+  .ProductList-grid .ProductList-item .sqs-add-to-cart-button {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    margin: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .ProductList-grid .ProductList-item .ProductList-overlay {
+   margin-bottom: 70px; 
+  }
+</style>
+
+<script>
+  $(".ProductList-grid .ProductList-item").each(function(e){
+    $(this).append('<div class="sqs-add-to-cart-button sqs-suppress-edit-mode sqs-editable-button" role="button" tabindex="0" data-product-type="1" data-original-label="Add To Cart"><div class="sqs-add-to-cart-button-inner">Add To Cart</div></div>');
+  });
+  $(function() {
+    $(".ProductList-grid .ProductList-item").each(function(e){
+      var dataItemId = $(this).attr('data-item-id');
+      $(this).find('.sqs-add-to-cart-button').attr('data-item-id', dataItemId);
+    });
+  });
+</script>
+
+
+<!-- End of Image Slider -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================
+     BASICIGGY MOBILE PORTFOLIO V7
+     
+     MOBILE ONLY
+     
+     /adventures
+       - Premium dark cards
+       - Centered Basiciggy logo
+       - CARTO travel map
+       - Pins + gallery previews
+     
+     /lifestyle
+       - Matching premium dark cards
+       - Centered Basiciggy logo
+     
+     /adventures/...
+     /lifestyle/...
+       - Custom dark gallery
+       - TRUE 2-column masonry
+       - Full uncropped photographs
+     
+     DESKTOP
+       - Existing Squarespace website untouched
+     ========================================================= -->
+
+
+<!-- =========================================================
+     LUCIDE ICONS
+     ========================================================= -->
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+
+<!-- =========================================================
+     LEAFLET
+     ========================================================= -->
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+
+
+/* =========================================================
+   HIDDEN BY DEFAULT / DESKTOP
+   ========================================================= */
+
+#bi-mobile-index,
+#bi-mobile-gallery,
+#bi-map-overlay {
+  display: none;
+}
+
+
+
+/* =========================================================
+   MOBILE ONLY
+   ========================================================= */
+
+@media screen and (max-width: 767px) {
+
+
+  #bi-mobile-index,
+  #bi-mobile-index *,
+  #bi-mobile-gallery,
+  #bi-mobile-gallery *,
+  #bi-map-overlay,
+  #bi-map-overlay * {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+
+
+
+  /* =======================================================
+     SHARED GLASS
+     ======================================================= */
+
+  .bi-glass {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+      rgba(29,29,33,.60);
+
+    backdrop-filter:
+      blur(26px)
+      saturate(160%);
+
+    -webkit-backdrop-filter:
+      blur(26px)
+      saturate(160%);
+
+    border:
+      1px solid
+      rgba(255,255,255,.10);
+
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.17),
+      inset 0 -1px 0 rgba(255,255,255,.035),
+      0 12px 38px rgba(0,0,0,.30);
+  }
+
+
+  .bi-glass::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,.08),
+        transparent 45%,
+        transparent 75%,
+        rgba(255,255,255,.025)
+      );
+  }
+
+
+
+  /* =======================================================
+     INDEX MODE
+     Adventures + Lifestyle
+     ======================================================= */
+
+  html.bi-index-mode,
+  body.bi-index-mode {
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    background:
+      #09090b !important;
+  }
+
+
+  body.bi-index-mode #siteWrapper {
+    display: none !important;
+  }
+
+
+  #bi-mobile-index {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2147483000;
+
+    display: block;
+
+    width: 100vw;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background:
+      radial-gradient(
+        circle at 50% -10%,
+        rgba(255,255,255,.045),
+        transparent 35%
+      ),
+      #09090b;
+  }
+
+
+
+  /* =======================================================
+     HEADER
+     ======================================================= */
+
+  .bi-mobile-header {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 50;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height:
+      calc(
+        env(safe-area-inset-top)
+        + 72px
+      );
+
+    padding:
+      calc(env(safe-area-inset-top) + 17px)
+      17px
+      16px;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(9,9,11,.98),
+        rgba(9,9,11,.82),
+        rgba(9,9,11,.56)
+      );
+
+    backdrop-filter:
+      blur(20px)
+      saturate(140%);
+
+    -webkit-backdrop-filter:
+      blur(20px)
+      saturate(140%);
+
+    border-bottom:
+      1px solid
+      rgba(255,255,255,.035);
+  }
+
+
+
+  /* =======================================================
+     LEFT PAGE TITLE
+     ======================================================= */
+
+  .bi-header-title {
+    position: relative;
+
+    z-index: 3;
+
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing:
+      -.04em;
+
+    white-space: nowrap;
+  }
+
+
+
+  /* =======================================================
+     CENTERED BASICIGGY LOGO
+     
+     Centered against the PHONE SCREEN itself,
+     not between the left/right controls.
+     ======================================================= */
+
+  .bi-header-logo {
+    position: absolute;
+
+    z-index: 10;
+
+    left: 50%;
+
+    top:
+      calc(
+        env(safe-area-inset-top)
+        + 22px
+      );
+
+    transform:
+      translateX(-50%);
+
+    display: block;
+
+    width: auto;
+
+    height: 25px;
+
+    max-width: 58px;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+  }
+
+
+
+  /* =======================================================
+     RIGHT HEADER BUTTON
+     ======================================================= */
+
+  .bi-header-button {
+    position: relative;
+
+    z-index: 3;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: flex;
+
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    color:
+      rgba(255,255,255,.90);
+
+    background:
+      rgba(255,255,255,.06);
+
+    backdrop-filter:
+      blur(14px);
+
+    -webkit-backdrop-filter:
+      blur(14px);
+
+    transition:
+      transform .18s ease,
+      background .18s ease;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-header-button:active {
+    transform:
+      scale(.90);
+
+    background:
+      rgba(255,255,255,.12);
+  }
+
+
+  .bi-header-button svg {
+    width: 20px;
+    height: 20px;
+
+    stroke-width: 1.7;
+  }
+
+
+
+  /* =======================================================
+     RIGHT SPACER FOR LIFESTYLE
+     
+     Keeps header geometry balanced while logo
+     remains absolutely centered.
+     ======================================================= */
+
+  .bi-header-spacer {
+    display: block;
+
+    width: 40px;
+    height: 40px;
+
+    flex:
+      0 0 40px;
+  }
+
+
+
+  /* =======================================================
+     INDEX SCROLLER
+     ======================================================= */
+
+  .bi-index-scroll {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding:
+      calc(env(safe-area-inset-top) + 88px)
+      14px
+      calc(env(safe-area-inset-bottom) + 116px);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior:
+      contain;
+
+    -webkit-overflow-scrolling:
+      touch;
+
+    scrollbar-width:
+      none;
+  }
+
+
+  .bi-index-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+
+
+  /* =======================================================
+     PROJECT CARD
+     ======================================================= */
+
+  .bi-project-card {
+    position: relative;
+
+    display: block;
+
+    flex:
+      0 0 230px;
+
+    width: 100%;
+    height: 230px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #232326,
+        #121214
+      );
+
+    text-decoration: none;
+
+    opacity: 0;
+
+    transform:
+      translateY(22px)
+      scale(.985);
+
+    transition:
+      opacity 650ms ease,
+      transform 700ms cubic-bezier(.18,.8,.2,1);
+
+    isolation: isolate;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-project-card.bi-visible {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+
+
+  /* =======================================================
+     CARD IMAGE
+     ======================================================= */
+
+  .bi-card-image {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+
+    transform:
+      scale(1.025);
+
+    transition:
+      opacity .65s ease,
+      transform .8s cubic-bezier(.18,.8,.2,1);
+  }
+
+
+  .bi-card-image.bi-loaded {
+    opacity: 1;
+  }
+
+
+  .bi-project-card:active
+  .bi-card-image {
+    transform:
+      scale(1.05);
+  }
+
+
+
+  /* =======================================================
+     CARD DARK OVERLAY
+     ======================================================= */
+
+  .bi-card-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,.00) 22%,
+        rgba(0,0,0,.03) 46%,
+        rgba(0,0,0,.40) 100%
+      );
+  }
+
+
+
+  /* =======================================================
+     LOADING SPINNER
+     ======================================================= */
+
+  .bi-card-loader {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 0;
+
+    width: 18px;
+    height: 18px;
+
+    margin:
+      -9px 0 0 -9px;
+
+    border:
+      1.5px solid
+      rgba(255,255,255,.10);
+
+    border-top-color:
+      rgba(255,255,255,.65);
+
+    border-radius: 50%;
+
+    animation:
+      bi-spin .8s linear infinite;
+  }
+
+
+  @keyframes bi-spin {
+    to {
+      transform:
+        rotate(360deg);
+    }
+  }
+
+
+
+  /* =======================================================
+     MOMENTS / GALLERY PILL
+     ======================================================= */
+
+  .bi-card-pill {
+    position: absolute;
+
+    top: 13px;
+    left: 13px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    height: 29px;
+
+    padding:
+      0 11px;
+
+    border-radius:
+      999px;
+
+    color:
+      rgba(255,255,255,.94);
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    letter-spacing:
+      -.01em;
+  }
+
+
+
+  /* =======================================================
+     CARD ARROW
+     ======================================================= */
+
+  .bi-card-arrow {
+    position: absolute;
+
+    top: 13px;
+    right: 13px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    color: #fff;
+  }
+
+
+  .bi-card-arrow svg {
+    width: 16px;
+    height: 16px;
+
+    stroke-width: 1.8;
+  }
+
+
+
+  /* =======================================================
+     LARGE CARD TITLE
+     
+     Raised approximately 15px vs original.
+     Extra height prevents fitted small text clipping.
+     ======================================================= */
+
+  .bi-card-title-window {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 4;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    width: 100%;
+    height: 120px;
+
+    padding:
+      0 12px;
+
+    overflow: hidden;
+
+    pointer-events: none;
+  }
+
+
+  .bi-card-title {
+    display: block;
+
+    flex: none;
+
+    width: max-content;
+
+    margin:
+      0 auto;
+
+    color:
+      rgba(255,255,255,.62);
+
+    font-size: 96px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing:
+      -.065em;
+
+    white-space:
+      nowrap;
+
+    text-align:
+      center;
+
+    transform:
+      translateY(-9px);
+
+    transform-origin:
+      center bottom;
+
+    text-shadow:
+      0 5px 24px
+      rgba(0,0,0,.18);
+
+    -webkit-font-smoothing:
+      antialiased;
+  }
+
+
+
+  /* =======================================================
+     FLOATING BOTTOM NAV
+     ======================================================= */
+
+  .bi-bottom-nav {
+    position: fixed;
+
+    left: 50%;
+
+    bottom:
+      calc(
+        env(safe-area-inset-bottom)
+        + 15px
+      );
+
+    z-index: 2147483600;
+
+    transform:
+      translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    padding:
+      10px 22px 9px;
+
+    border-radius:
+      999px;
+
+    white-space:
+      nowrap;
+  }
+
+
+  .bi-nav-link {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    min-width: 48px;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    color:
+      rgba(255,255,255,.43);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+      color .18s ease,
+      transform .18s ease;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-nav-link svg {
+    width: 20px;
+    height: 20px;
+
+    stroke-width: 1.8;
+  }
+
+
+  .bi-nav-link.bi-active {
+    color: #fff;
+  }
+
+
+  .bi-nav-link:active {
+    transform:
+      scale(.90);
+  }
+
+
+
+  /* =======================================================
+     GALLERY MODE
+     ======================================================= */
+
+  html.bi-gallery-mode,
+  body.bi-gallery-mode {
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    background:
+      #09090b !important;
+  }
+
+
+  body.bi-gallery-mode
+  #siteWrapper {
+    display:
+      none !important;
+  }
+
+
+  #bi-mobile-gallery {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2147483000;
+
+    display: block;
+
+    width: 100vw;
+    height: 100dvh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling:
+      touch;
+
+    background:
+      #09090b;
+
+    scrollbar-width:
+      none;
+  }
+
+
+  #bi-mobile-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+
+
+  /* =======================================================
+     GALLERY TOP FADE
+     ======================================================= */
+
+  .bi-gallery-top-fade {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 80;
+
+    height:
+      calc(
+        env(safe-area-inset-top)
+        + 80px
+      );
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(9,9,11,.86),
+        rgba(9,9,11,.30),
+        transparent
+      );
+  }
+
+
+
+  /* =======================================================
+     GALLERY BACK BUTTON
+     ======================================================= */
+
+  .bi-gallery-back {
+    position: fixed;
+
+    top:
+      calc(
+        env(safe-area-inset-top)
+        + 14px
+      );
+
+    left: 14px;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-gallery-back svg {
+    width: 19px;
+    height: 19px;
+
+    stroke-width: 1.8;
+  }
+
+
+
+  /* =======================================================
+     CENTERED GALLERY LOGO
+     ======================================================= */
+
+  .bi-gallery-logo {
+    position: fixed;
+
+    z-index: 100;
+
+    top:
+      calc(
+        env(safe-area-inset-top)
+        + 22px
+      );
+
+    left: 50%;
+
+    display: block;
+
+    width: auto;
+
+    height: 25px;
+
+    max-width: 58px;
+
+    transform:
+      translateX(-50%);
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    user-select: none;
+  }
+
+
+
+  /* =======================================================
+     GALLERY CONTENT
+     ======================================================= */
+
+  .bi-gallery-content {
+    width: 100%;
+
+    padding:
+      calc(env(safe-area-inset-top) + 94px)
+      12px
+      calc(env(safe-area-inset-bottom) + 114px);
+  }
+
+
+
+  /* =======================================================
+     GALLERY TITLE
+     ======================================================= */
+
+  .bi-gallery-title {
+    width: 100%;
+
+    margin:
+      0 0 20px;
+
+    padding:
+      0 8px;
+
+    color:
+      rgba(255,255,255,.96);
+
+    font-size:
+      clamp(38px, 12vw, 62px);
+
+    font-weight: 300;
+
+    line-height: .98;
+
+    letter-spacing:
+      -.055em;
+
+    text-align:
+      center;
+
+    text-transform:
+      uppercase;
+
+    overflow-wrap:
+      anywhere;
+  }
+
+
+
+  /* =======================================================
+     TRUE 2 COLUMN MASONRY
+     ======================================================= */
+
+  .bi-masonry {
+    width: 100%;
+
+    column-count:
+      2 !important;
+
+    column-width:
+      auto !important;
+
+    column-gap:
+      12px !important;
+  }
+
+
+  .bi-masonry-item {
+    display:
+      inline-block;
+
+    width:
+      100%;
+
+    margin:
+      0 0 12px;
+
+    padding:
+      0;
+
+    vertical-align:
+      top;
+
+    break-inside:
+      avoid;
+
+    -webkit-column-break-inside:
+      avoid;
+
+    page-break-inside:
+      avoid;
+  }
+
+
+  .bi-masonry-item img {
+    display:
+      block;
+
+    width:
+      100%;
+
+    max-width:
+      100%;
+
+    height:
+      auto;
+
+    margin:
+      0;
+
+    padding:
+      0;
+
+    object-fit:
+      contain;
+
+    object-position:
+      center;
+
+    border-radius:
+      2px;
+
+    background:
+      #111;
+  }
+
+
+
+  /* =======================================================
+     GALLERY LOADING
+     ======================================================= */
+
+  .bi-gallery-loading {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height:
+      45vh;
+  }
+
+
+  .bi-gallery-loading-ring {
+    width: 26px;
+    height: 26px;
+
+    border:
+      2px solid
+      rgba(255,255,255,.10);
+
+    border-top-color:
+      rgba(255,255,255,.70);
+
+    border-radius: 50%;
+
+    animation:
+      bi-spin .8s linear infinite;
+  }
+
+
+
+  /* =======================================================
+     MAP OVERLAY
+     ======================================================= */
+
+  #bi-map-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2147483900;
+
+    display: none;
+
+    width: 100vw;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background:
+      #08080a;
+  }
+
+
+  #bi-map-overlay.bi-open {
+    display:
+      block;
+  }
+
+
+  #bi-travel-map {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+      #08080a;
+  }
+
+
+
+  /* =======================================================
+     LEAFLET
+     ======================================================= */
+
+  .leaflet-container {
+    background:
+      #08080a;
+
+    font-family:
+      'Inter',
+      sans-serif;
+  }
+
+
+  .leaflet-control-zoom {
+    display:
+      none;
+  }
+
+
+  .leaflet-control-attribution {
+    opacity:
+      .45;
+
+    font-size:
+      8px !important;
+  }
+
+
+  .leaflet-control-attribution a {
+    color:
+      #555 !important;
+  }
+
+
+
+  /* =======================================================
+     MAP PIN
+     ======================================================= */
+
+  .bi-map-pin-wrapper {
+    background:
+      transparent !important;
+
+    border:
+      0 !important;
+  }
+
+
+  .bi-map-pin {
+    position: relative;
+
+    width: 18px;
+    height: 18px;
+
+    border:
+      3px solid
+      rgba(255,255,255,.97);
+
+    border-radius:
+      50%;
+
+    background:
+      #101012;
+
+    box-shadow:
+      0 4px 12px rgba(0,0,0,.48),
+      0 0 0 4px rgba(255,255,255,.12);
+  }
+
+
+  .bi-map-pin::after {
+    content: '';
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 4px;
+    height: 4px;
+
+    transform:
+      translate(-50%,-50%);
+
+    border-radius:
+      50%;
+
+    background:
+      #fff;
+  }
+
+
+
+  /* =======================================================
+     MAP TOP FADE
+     ======================================================= */
+
+  .bi-map-top-fade {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 500;
+
+    height:
+      calc(
+        env(safe-area-inset-top)
+        + 95px
+      );
+
+    pointer-events:
+      none;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(6,6,8,.82),
+        rgba(6,6,8,.22),
+        transparent
+      );
+  }
+
+
+
+  /* =======================================================
+     MAP HEADER
+     ======================================================= */
+
+  .bi-map-header {
+    position: absolute;
+
+    top:
+      calc(
+        env(safe-area-inset-top)
+        + 13px
+      );
+
+    left: 14px;
+    right: 14px;
+
+    z-index: 600;
+
+    display: flex;
+
+    align-items: center;
+
+    pointer-events:
+      none;
+  }
+
+
+  .bi-map-close {
+    appearance: none;
+    -webkit-appearance: none;
+
+    pointer-events:
+      auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 41px;
+    height: 41px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    color: #fff;
+  }
+
+
+  .bi-map-close svg {
+    width: 18px;
+    height: 18px;
+  }
+
+
+  .bi-map-title {
+    position: absolute;
+
+    left: 50%;
+
+    transform:
+      translateX(-50%);
+
+    color:
+      rgba(255,255,255,.94);
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    letter-spacing:
+      -.03em;
+
+    white-space:
+      nowrap;
+  }
+
+
+
+  /* =======================================================
+     MAP PREVIEW CARD
+     ======================================================= */
+
+  .bi-map-preview {
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+
+    bottom:
+      calc(
+        env(safe-area-inset-bottom)
+        + 14px
+      );
+
+    z-index: 700;
+
+    padding:
+      10px;
+
+    border-radius:
+      25px;
+
+    opacity: 0;
+
+    transform:
+      translateY(130%);
+
+    pointer-events:
+      none;
+
+    transition:
+      transform .4s cubic-bezier(.2,.8,.2,1),
+      opacity .25s ease;
+  }
+
+
+  .bi-map-preview.bi-visible {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+
+    pointer-events:
+      auto;
+  }
+
+
+
+  /* =======================================================
+     PREVIEW IMAGES
+     ======================================================= */
+
+  .bi-map-preview-images {
+    display: grid;
+
+    grid-template-columns:
+      1.4fr 1fr 1fr;
+
+    gap: 5px;
+
+    height: 110px;
+
+    margin-bottom:
+      11px;
+
+    overflow:
+      hidden;
+
+    border-radius:
+      17px;
+
+    background:
+      rgba(255,255,255,.04);
+  }
+
+
+  .bi-map-preview-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit:
+      cover;
+
+    background:
+      #171719;
+  }
+
+
+
+  /* =======================================================
+     PREVIEW INFO
+     ======================================================= */
+
+  .bi-map-preview-bottom {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+      2px 3px 2px 7px;
+  }
+
+
+  .bi-map-preview-copy {
+    flex:
+      1;
+
+    min-width:
+      0;
+  }
+
+
+  .bi-map-preview-label {
+    margin-bottom:
+      3px;
+
+    color:
+      rgba(255,255,255,.42);
+
+    font-size:
+      9px;
+
+    font-weight:
+      600;
+
+    letter-spacing:
+      .09em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  .bi-map-preview-title {
+    overflow:
+      hidden;
+
+    color:
+      #fff;
+
+    font-size:
+      16px;
+
+    font-weight:
+      600;
+
+    letter-spacing:
+      -.035em;
+
+    text-overflow:
+      ellipsis;
+
+    white-space:
+      nowrap;
+  }
+
+
+  .bi-map-preview-count {
+    margin-top:
+      3px;
+
+    color:
+      rgba(255,255,255,.48);
+
+    font-size:
+      11px;
+  }
+
+
+
+  /* =======================================================
+     VIEW GALLERY BUTTON
+     ======================================================= */
+
+  .bi-map-view-gallery {
+    display: flex;
+
+    flex:
+      0 0 auto;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+      5px;
+
+    height:
+      42px;
+
+    padding:
+      0 15px;
+
+    border-radius:
+      999px;
+
+    background:
+      #fff;
+
+    color:
+      #09090b;
+
+    font-size:
+      11px;
+
+    font-weight:
+      700;
+
+    text-decoration:
+      none;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-map-view-gallery svg {
+    width:
+      14px;
+
+    height:
+      14px;
+  }
+
+
+
+  /* =======================================================
+     SMALL PHONES
+     ======================================================= */
+
+  @media screen and (max-width: 350px) {
+
+
+    .bi-index-scroll {
+      padding-left:
+        10px;
+
+      padding-right:
+        10px;
+    }
+
+
+    .bi-bottom-nav {
+      gap:
+        18px;
+
+      padding-left:
+        18px;
+
+      padding-right:
+        18px;
+    }
+
+
+    .bi-masonry {
+      column-gap:
+        9px !important;
+    }
+
+
+    .bi-masonry-item {
+      margin-bottom:
+        9px;
+    }
+
+
+    .bi-gallery-content {
+      padding-left:
+        9px;
+
+      padding-right:
+        9px;
+    }
+
+
+    .bi-header-logo,
+    .bi-gallery-logo {
+      height:
+        23px;
+    }
+
+  }
+
+}
+
+</style>
+
+
+
+<script>
+
+(function () {
+
+  'use strict';
+
+
+
+  /* =========================================================
+     CONFIG
+     ========================================================= */
+
+  const MOBILE_BREAKPOINT =
+    767;
+
+
+
+  /*
+     BASICIGGY LOGO
+     Public Squarespace CDN URL supplied by you.
+  */
+
+  const BASICIGGY_LOGO_URL =
+    'https://images.squarespace-cdn.com/content/574df21d40261ddf2101a3f1/0fe84dd4-bc34-45db-b3ff-e416fa0c7fb2/basiciggy+logo+2026.png?content-type=image%2Fpng';
+
+
+
+  /*
+     CARTO API KEY
+  */
+
+  const CARTO_API_KEY =
+    'cb1_3wz2_1_172c5986b0c16b2c61045b1e';
+
+
+
+  /* =========================================================
+     ADVENTURES
+     ========================================================= */
+
+  const adventures = [
+
+    {
+      name: 'Banff',
+      href: '/adventures/banff',
+      lat: 51.1784,
+      lng: -115.5708
+    },
+
+    {
+      name: 'Wyoming',
+      href: '/adventures/wyoming',
+      lat: 43.4799,
+      lng: -110.7624
+    },
+
+    {
+      name: 'Japan',
+      href: '/adventures/japan',
+      lat: 35.6762,
+      lng: 139.6503
+    },
+
+    {
+      name: 'Italy',
+      href: '/adventures/italy-63ply',
+      lat: 41.9028,
+      lng: 12.4964
+    },
+
+    {
+      name: 'Paris',
+      href: '/adventures/paris',
+      lat: 48.8566,
+      lng: 2.3522
+    },
+
+    {
+      name: 'HWY 395',
+      href: '/adventures/hwy395',
+      lat: 37.6485,
+      lng: -118.9721
+    },
+
+    {
+      name: 'Thailand',
+      href: '/adventures/thailand-c6ztr',
+      lat: 13.7563,
+      lng: 100.5018
+    },
+
+    {
+      name: 'FlyNyon NY',
+      href: '/adventures/flynyon',
+      lat: 40.7128,
+      lng: -74.0060
+    },
+
+    {
+      name: 'Anthelion Heli',
+      href: '/adventures/anthelion-heli-ehf5z',
+      lat: 33.8177,
+      lng: -118.1516
+    },
+
+    {
+      name: 'Scotland',
+      href: '/adventures/scotland',
+      lat: 55.9533,
+      lng: -3.1883
+    },
+
+    {
+      name: 'Barbers Point Helicopters',
+      href: '/adventures/barbers-point-helicopters-kbr2k',
+      lat: 21.3074,
+      lng: -158.0703
+    },
+
+    {
+      name: 'Oregon',
+      href: '/adventures/oregon-fxtwb',
+      lat: 44.0000,
+      lng: -120.5000
+    },
+
+    {
+      name: 'Jalisco, Mexico',
+      href: '/adventures/jalisco-mexico-tz5hm',
+      lat: 20.6597,
+      lng: -103.3496
+    },
+
+    {
+      name: 'Mexico City',
+      href: '/adventures/mexico-city',
+      lat: 19.4326,
+      lng: -99.1332
+    },
+
+    {
+      name: 'Costa Rica',
+      href: '/adventures/costa-rica-c7ahj',
+      lat: 9.9281,
+      lng: -84.0907
+    },
+
+    {
+      name: 'British Columbia, Canada',
+      href: '/adventures/british-columbia-canada-69yr8',
+      lat: 49.2827,
+      lng: -123.1207
+    },
+
+    {
+      name: 'Canadian Outback Rafting',
+      href: '/adventures/canadian-outback-rafting-pkgl9',
+      lat: 49.7016,
+      lng: -123.1558
+    },
+
+    {
+      name: 'Belize',
+      href: '/adventures/belize-swzzy',
+      lat: 17.1899,
+      lng: -88.4976
+    },
+
+    {
+      name: 'New York',
+      href: '/adventures/new-york-4epsh',
+      lat: 40.7128,
+      lng: -74.0060
+    },
+
+    {
+      name: 'Yosemite',
+      href: '/adventures/yosemite',
+      lat: 37.8651,
+      lng: -119.5383
+    },
+
+    {
+      name: 'Utah',
+      href: '/adventures/utah-8el4m',
+      lat: 39.3210,
+      lng: -111.0937
+    },
+
+    {
+      name: 'Banzai Divers Hawaii',
+      href: '/adventures/banzai-divers-hawaii-5thha',
+      lat: 21.4389,
+      lng: -157.9840
+    },
+
+    {
+      name: 'Happy Flights Cabo Parasailing',
+      href: '/adventures/happy-flights-cabo-parasailing-whmxb',
+      lat: 22.8905,
+      lng: -109.9167
+    },
+
+    {
+      name: 'Havasupai',
+      href: '/adventures/havasupai-kb8en',
+      lat: 36.2550,
+      lng: -112.6989
+    },
+
+    {
+      name: 'Abandoned USC Hospital',
+      href: '/adventures/abandoned-hospital-ymx8t',
+      lat: 34.0577,
+      lng: -118.2083
+    }
+
+  ];
+
+
+
+  /* =========================================================
+     LIFESTYLE
+     ========================================================= */
+
+  const lifestyle = [
+
+    {
+      name: 'PokePark Kanto',
+      href: '/lifestyle/pokepark-kanto'
+    },
+
+    {
+      name: 'SuperILL',
+      href: '/lifestyle/superill'
+    },
+
+    {
+      name: 'Shoe Palace x Hoka',
+      href: '/lifestyle/shoe-palace-x-hoka'
+    },
+
+    {
+      name: 'Porsche Macan',
+      href: '/lifestyle/porsche-macan'
+    },
+
+    {
+      name: 'Toyota Prius & Crown',
+      href: '/lifestyle/toyota'
+    },
+
+    {
+      name: 'Laguna Seca Porsche Club',
+      href: '/lifestyle/laguna-seca-porsche-club-ye5hp'
+    },
+
+    {
+      name: 'Formula D Media Day',
+      href: '/lifestyle/formula-d-media-day-wc8xg'
+    },
+
+    {
+      name: 'Steven Harrington x Modernica',
+      href: '/lifestyle/steven-harrington-x-modernica-wd8c6'
+    },
+
+    {
+      name: 'Honda x Leen Customs',
+      href: '/lifestyle/honda-x-leen-customs-sj95n'
+    },
+
+    {
+      name: 'Leen Customs',
+      href: '/lifestyle/leen-customs-3j8wd'
+    },
+
+    {
+      name: 'Illest x Frenchie Division',
+      href: '/lifestyle/illest-x-frenchie-division-lsz6b'
+    },
+
+    {
+      name: 'Estrella Jalisco',
+      href: '/lifestyle/estrella-jalisco'
+    },
+
+    {
+      name: 'Designer Con 23 Bearbricks',
+      href: '/lifestyle/designer-con-23-bearbricks-lhs7n'
+    },
+
+    {
+      name: 'Diamond x Illest',
+      href: '/lifestyle/diamond-x-illest-sepax'
+    },
+
+    {
+      name: 'Ghost Extracts',
+      href: '/lifestyle/ghost-extracts-pnfps'
+    },
+
+    {
+      name: 'MESA',
+      href: '/lifestyle/mesa-fss9z'
+    },
+
+    {
+      name: 'Leen Customs Golf',
+      href: '/lifestyle/leen-customs-golf-bcr77'
+    },
+
+    {
+      name: 'Hyundai Ioniq 5',
+      href: '/lifestyle/hyundai-ioniq-5-fa3da'
+    },
+
+    {
+      name: 'Deleon Tequila',
+      href: '/lifestyle/deleon-tequla-2sm74'
+    },
+
+    {
+      name: 'Yakima Racks',
+      href: '/lifestyle/yakima-racks-wl22h'
+    },
+
+    {
+      name: 'Vredestein Tires',
+      href: '/lifestyle/vredestein-tires-383gw'
+    },
+
+    {
+      name: 'Viilante!',
+      href: '/lifestyle/viilante-ebscx'
+    },
+
+    {
+      name: 'Jenny M',
+      href: '/lifestyle/jenny-m-arwx4'
+    },
+
+    {
+      name: 'Wham-O',
+      href: '/lifestyle/whamo-1-49e5k'
+    },
+
+    {
+      name: '1800 Tequila',
+      href: '/lifestyle/1800tequila-xbjsr'
+    },
+
+    {
+      name: 'Sav Palacio',
+      href: '/lifestyle/sav-palacio-apj4w'
+    },
+
+    {
+      name: 'Bardot Bars & Coffee',
+      href: '/lifestyle/bardot-bars-coffee-k4wgd'
+    },
+
+    {
+      name: 'Hypland Winter 2016',
+      href: '/lifestyle/hypland-winter-2016-3wm9t'
+    }
+
+  ];
+
+
+
+  /* =========================================================
+     SECTIONS
+     ========================================================= */
+
+  const sections = {
+
+    adventures: {
+
+      id:
+        'adventures',
+
+      path:
+        '/adventures',
+
+      title:
+        'Adventures',
+
+      items:
+        adventures,
+
+      hasMap:
+        true
+
+    },
+
+
+    lifestyle: {
+
+      id:
+        'lifestyle',
+
+      path:
+        '/lifestyle',
+
+      title:
+        'Lifestyle',
+
+      items:
+        lifestyle,
+
+      hasMap:
+        false
+
+    }
+
+  };
+
+
+
+  /* =========================================================
+     CACHE
+     ========================================================= */
+
+  const galleryCache =
+    {};
+
+
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+
+  function isMobile() {
+
+    return window.matchMedia(
+      `(max-width:${MOBILE_BREAKPOINT}px)`
+    ).matches;
+
+  }
+
+
+
+  function getPath() {
+
+    let path =
+      window.location.pathname
+        .replace(/\/+$/, '');
+
+
+    if (!path) {
+
+      path = '/';
+
+    }
+
+
+    return path;
+
+  }
+
+
+
+  function currentSection() {
+
+    const path =
+      getPath();
+
+
+    if (
+      path === '/adventures' ||
+      path.startsWith(
+        '/adventures/'
+      )
+    ) {
+
+      return sections.adventures;
+
+    }
+
+
+    if (
+      path === '/lifestyle' ||
+      path.startsWith(
+        '/lifestyle/'
+      )
+    ) {
+
+      return sections.lifestyle;
+
+    }
+
+
+    return null;
+
+  }
+
+
+
+  function isSectionIndex(
+    section
+  ) {
+
+    return (
+      section &&
+      getPath() ===
+      section.path
+    );
+
+  }
+
+
+
+  function isSectionGallery(
+    section
+  ) {
+
+    return (
+      section &&
+      getPath().startsWith(
+        section.path + '/'
+      )
+    );
+
+  }
+
+
+
+  function escapeHTML(
+    value
+  ) {
+
+    return String(value)
+
+      .replace(
+        /&/g,
+        '&amp;'
+      )
+
+      .replace(
+        /</g,
+        '&lt;'
+      )
+
+      .replace(
+        />/g,
+        '&gt;'
+      )
+
+      .replace(
+        /"/g,
+        '&quot;'
+      )
+
+      .replace(
+        /'/g,
+        '&#039;'
+      );
+
+  }
+
+
+
+  function refreshIcons() {
+
+    if (!window.lucide) {
+
+      return;
+
+    }
+
+
+    window.lucide.createIcons({
+
+      attrs: {
+
+        'stroke-width':
+          1.8
+
+      }
+
+    });
+
+  }
+
+
+
+  /* =========================================================
+     LOGO HTML
+     ========================================================= */
+
+  function headerLogoHTML() {
+
+    return `
+
+      <img
+        class="bi-header-logo"
+        src="${escapeHTML(BASICIGGY_LOGO_URL)}"
+        alt="Basiciggy"
+        onerror="this.style.display='none';"
+      />
+
+    `;
+
+  }
+
+
+
+  function galleryLogoHTML() {
+
+    return `
+
+      <img
+        class="bi-gallery-logo"
+        src="${escapeHTML(BASICIGGY_LOGO_URL)}"
+        alt="Basiciggy"
+        onerror="this.style.display='none';"
+      />
+
+    `;
+
+  }
+
+
+
+  /* =========================================================
+     BOTTOM NAV
+     ========================================================= */
+
+  function navHTML(
+    active
+  ) {
+
+    return `
+
+      <nav
+        class="
+          bi-bottom-nav
+          bi-glass
+        "
+      >
+
+        <a
+          href="/"
+          class="
+            bi-nav-link
+            ${active === 'home'
+              ? 'bi-active'
+              : ''}
+          "
+          aria-label="Home"
+        >
+
+          <i
+            data-lucide="home"
+          ></i>
+
+          <span>
+            Home
+          </span>
+
+        </a>
+
+
+        <a
+          href="/lifestyle"
+          class="
+            bi-nav-link
+            ${active === 'lifestyle'
+              ? 'bi-active'
+              : ''}
+          "
+          aria-label="Lifestyle"
+        >
+
+          <i
+            data-lucide="camera"
+          ></i>
+
+          <span>
+            Lifestyle
+          </span>
+
+        </a>
+
+
+        <a
+          href="/adventures"
+          class="
+            bi-nav-link
+            ${active === 'adventures'
+              ? 'bi-active'
+              : ''}
+          "
+          aria-label="Trips"
+        >
+
+          <i
+            data-lucide="map"
+          ></i>
+
+          <span>
+            Trips
+          </span>
+
+        </a>
+
+      </nav>
+
+    `;
+
+  }
+
+
+
+  /* =========================================================
+     LOAD EXISTING SQUARESPACE GALLERY IMAGES
+     ========================================================= */
+
+  async function getGalleryImages(
+    href
+  ) {
+
+    if (
+      galleryCache[href]
+    ) {
+
+      return galleryCache[href];
+
+    }
+
+
+    const response =
+      await fetch(
+        href,
+        {
+          credentials:
+            'same-origin'
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        'Unable to load gallery'
+      );
+
+    }
+
+
+    const html =
+      await response.text();
+
+
+    const doc =
+      new DOMParser()
+        .parseFromString(
+          html,
+          'text/html'
+        );
+
+
+    const selectors = [
+
+      '.gallery-grid-item img',
+
+      '.gallery-masonry-item img',
+
+      '.sqs-gallery img',
+
+      '.sqs-block-image img',
+
+      '.fluid-image-container img'
+
+    ];
+
+
+    const nodes =
+      Array.from(
+        doc.querySelectorAll(
+          selectors.join(',')
+        )
+      );
+
+
+    const images =
+      [];
+
+
+    const used =
+      new Set();
+
+
+
+    nodes.forEach(
+      function(img) {
+
+        let src =
+
+          img.getAttribute(
+            'data-src'
+          ) ||
+
+          img.getAttribute(
+            'data-image'
+          ) ||
+
+          img.getAttribute(
+            'data-load'
+          ) ||
+
+          img.getAttribute(
+            'src'
+          );
+
+
+        if (!src) {
+
+          return;
+
+        }
+
+
+        if (
+          src.startsWith(
+            'data:'
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        const lower =
+          src.toLowerCase();
+
+
+        if (
+          lower.includes(
+            'favicon'
+          ) ||
+
+          lower.includes(
+            'avatar'
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+          Don't accidentally use the Basiciggy logo
+          as a gallery photo.
+        */
+
+        if (
+          lower.includes(
+            'basiciggy+logo'
+          ) ||
+
+          lower.includes(
+            'basiciggy%20logo'
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        try {
+
+          const url =
+            new URL(
+              src,
+              window.location.origin
+            );
+
+
+          if (
+            url.hostname.includes(
+              'squarespace'
+            )
+          ) {
+
+            url.searchParams.set(
+              'format',
+              '1500w'
+            );
+
+          }
+
+
+          src =
+            url.href;
+
+
+        } catch(error) {}
+
+
+        const uniqueKey =
+          src.split('?')[0];
+
+
+        if (
+          used.has(
+            uniqueKey
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        used.add(
+          uniqueKey
+        );
+
+
+        images.push(
+          src
+        );
+
+      }
+    );
+
+
+    galleryCache[href] =
+      images;
+
+
+    return images;
+
+  }
+
+
+
+  /* =========================================================
+     INDEX PAGE
+     ========================================================= */
+
+  function mountIndex(
+    section
+  ) {
+
+    if (
+      !isMobile() ||
+      !section ||
+      !isSectionIndex(section)
+    ) {
+
+      return;
+
+    }
+
+
+    document.documentElement
+      .classList
+      .add(
+        'bi-index-mode'
+      );
+
+
+    document.body
+      .classList
+      .add(
+        'bi-index-mode'
+      );
+
+
+    let root =
+      document.getElementById(
+        'bi-mobile-index'
+      );
+
+
+    if (
+      root &&
+      root.dataset.section ===
+      section.id
+    ) {
+
+      return;
+
+    }
+
+
+    if (root) {
+
+      root.remove();
+
+    }
+
+
+    root =
+      document.createElement(
+        'div'
+      );
+
+
+    root.id =
+      'bi-mobile-index';
+
+
+    root.dataset.section =
+      section.id;
+
+
+
+    /* =====================================================
+       RIGHT HEADER CONTROL
+       ===================================================== */
+
+    const rightControl =
+
+      section.hasMap
+
+      ? `
+
+        <button
+          id="bi-map-button"
+          class="bi-header-button"
+          type="button"
+          aria-label="Travel Map"
+        >
+
+          <i
+            data-lucide="map"
+          ></i>
+
+        </button>
+
+      `
+
+      : `
+
+        <span
+          class="bi-header-spacer"
+          aria-hidden="true"
+        ></span>
+
+      `;
+
+
+
+    root.innerHTML = `
+
+      <header
+        class="bi-mobile-header"
+      >
+
+        <h1
+          class="bi-header-title"
+        >
+          ${escapeHTML(section.title)}
+        </h1>
+
+
+        ${headerLogoHTML()}
+
+
+        ${rightControl}
+
+      </header>
+
+
+      <main
+        id="bi-index-scroll"
+        class="bi-index-scroll"
+      ></main>
+
+
+      ${navHTML(
+        section.id
+      )}
+
+    `;
+
+
+    document.body
+      .appendChild(
+        root
+      );
+
+
+    const list =
+      root.querySelector(
+        '#bi-index-scroll'
+      );
+
+
+
+    /* =====================================================
+       CREATE PROJECT CARDS
+       ===================================================== */
+
+    section.items.forEach(
+      function(
+        item,
+        index
+      ) {
+
+        const card =
+          document.createElement(
+            'a'
+          );
+
+
+        card.className =
+          'bi-project-card';
+
+
+        card.href =
+          item.href;
+
+
+        card.dataset.href =
+          item.href;
+
+
+        card.dataset.index =
+          String(index);
+
+
+        card.setAttribute(
+          'aria-label',
+          'Open ' +
+          item.name +
+          ' gallery'
+        );
+
+
+        card.innerHTML = `
+
+          <div
+            class="bi-card-loader"
+          ></div>
+
+
+          <img
+            class="bi-card-image"
+            alt="${escapeHTML(item.name)}"
+          />
+
+
+          <div
+            class="bi-card-overlay"
+          ></div>
+
+
+          <div
+            class="
+              bi-card-pill
+              bi-glass
+            "
+          >
+            Gallery
+          </div>
+
+
+          <div
+            class="
+              bi-card-arrow
+              bi-glass
+            "
+          >
+
+            <i
+              data-lucide="arrow-up-right"
+            ></i>
+
+          </div>
+
+
+          <div
+            class="bi-card-title-window"
+          >
+
+            <div
+              class="bi-card-title"
+            >
+              ${escapeHTML(item.name)}
+            </div>
+
+          </div>
+
+        `;
+
+
+        list.appendChild(
+          card
+        );
+
+
+
+        /*
+           Entrance animation
+        */
+
+        window.setTimeout(
+          function() {
+
+            card.classList.add(
+              'bi-visible'
+            );
+
+          },
+
+          90 +
+          Math.min(
+            index,
+            5
+          ) * 75
+
+        );
+
+      }
+    );
+
+
+    setupCardLoading(
+      root,
+      list
+    );
+
+
+    refreshIcons();
+
+
+    fitAllTitles();
+
+
+
+    if (
+      document.fonts &&
+      document.fonts.ready
+    ) {
+
+      document.fonts.ready
+        .then(
+          fitAllTitles
+        );
+
+    }
+
+
+
+    /* =====================================================
+       MAP BUTTON
+       ===================================================== */
+
+    if (
+      section.hasMap
+    ) {
+
+      const mapButton =
+        root.querySelector(
+          '#bi-map-button'
+        );
+
+
+      if (mapButton) {
+
+        mapButton.addEventListener(
+          'click',
+          openMap
+        );
+
+      }
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     LAZY LOAD PROJECT CARDS
+     ========================================================= */
+
+  function setupCardLoading(
+    root,
+    list
+  ) {
+
+    const cards =
+      Array.from(
+        root.querySelectorAll(
+          '.bi-project-card'
+        )
+      );
+
+
+    if (
+      !('IntersectionObserver' in window)
+    ) {
+
+      cards.forEach(
+        hydrateCard
+      );
+
+
+      return;
+
+    }
+
+
+    const observer =
+      new IntersectionObserver(
+
+        function(entries) {
+
+          entries.forEach(
+            function(entry) {
+
+              if (
+                !entry.isIntersecting
+              ) {
+
+                return;
+
+              }
+
+
+              hydrateCard(
+                entry.target
+              );
+
+
+              observer.unobserve(
+                entry.target
+              );
+
+            }
+          );
+
+        },
+
+        {
+
+          root:
+            list,
+
+          rootMargin:
+            '500px 0px 500px 0px',
+
+          threshold:
+            0
+
+        }
+
+      );
+
+
+    cards.forEach(
+      function(card) {
+
+        observer.observe(
+          card
+        );
+
+      }
+    );
+
+  }
+
+
+
+  /* =========================================================
+     LOAD COVER / COUNT
+     ========================================================= */
+
+  async function hydrateCard(
+    card
+  ) {
+
+    if (
+      card.dataset.loaded ===
+      'true' ||
+
+      card.dataset.loading ===
+      'true'
+    ) {
+
+      return;
+
+    }
+
+
+    card.dataset.loading =
+      'true';
+
+
+    const image =
+      card.querySelector(
+        '.bi-card-image'
+      );
+
+
+    const loader =
+      card.querySelector(
+        '.bi-card-loader'
+      );
+
+
+    const pill =
+      card.querySelector(
+        '.bi-card-pill'
+      );
+
+
+    try {
+
+      const images =
+        await getGalleryImages(
+          card.dataset.href
+        );
+
+
+      if (
+        pill &&
+        images.length
+      ) {
+
+        pill.textContent =
+
+          images.length +
+
+          (
+            images.length === 1
+              ? ' moment'
+              : ' moments'
+          );
+
+      }
+
+
+      if (
+        image &&
+        images.length
+      ) {
+
+        image.onload =
+          function() {
+
+            image.classList.add(
+              'bi-loaded'
+            );
+
+
+            if (loader) {
+
+              loader.remove();
+
+            }
+
+          };
+
+
+        image.onerror =
+          function() {
+
+            if (loader) {
+
+              loader.remove();
+
+            }
+
+          };
+
+
+        image.src =
+          images[0];
+
+
+      } else if (
+        loader
+      ) {
+
+        loader.remove();
+
+      }
+
+
+      card.dataset.loaded =
+        'true';
+
+
+    } catch(error) {
+
+      if (loader) {
+
+        loader.remove();
+
+      }
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     AUTO FIT LONG TITLES
+     ========================================================= */
+
+  function fitAllTitles() {
+
+    document
+      .querySelectorAll(
+        '.bi-card-title'
+      )
+      .forEach(
+        fitTitle
+      );
+
+  }
+
+
+
+  function fitTitle(
+    title
+  ) {
+
+    const holder =
+      title.closest(
+        '.bi-card-title-window'
+      );
+
+
+    if (!holder) {
+
+      return;
+
+    }
+
+
+    const available =
+      holder.clientWidth -
+      24;
+
+
+    if (
+      available <= 0
+    ) {
+
+      return;
+
+    }
+
+
+    const MAX =
+      96;
+
+
+    const MIN =
+      21;
+
+
+    let low =
+      MIN;
+
+
+    let high =
+      MAX;
+
+
+    let best =
+      MIN;
+
+
+
+    for (
+      let i = 0;
+      i < 11;
+      i++
+    ) {
+
+      const size =
+        (low + high) / 2;
+
+
+      title.style.fontSize =
+        size + 'px';
+
+
+      if (
+        title.scrollWidth <=
+        available
+      ) {
+
+        best =
+          size;
+
+        low =
+          size;
+
+
+      } else {
+
+        high =
+          size;
+
+      }
+
+    }
+
+
+    title.style.fontSize =
+      best.toFixed(1) +
+      'px';
+
+
+
+    if (
+      best < 38
+    ) {
+
+      title.style.letterSpacing =
+        '-.015em';
+
+
+    } else if (
+      best < 55
+    ) {
+
+      title.style.letterSpacing =
+        '-.04em';
+
+
+    } else {
+
+      title.style.letterSpacing =
+        '-.065em';
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     CUSTOM MOBILE GALLERY
+     ========================================================= */
+
+  async function mountGallery(
+    section
+  ) {
+
+    if (
+      !isMobile() ||
+      !section ||
+      !isSectionGallery(section)
+    ) {
+
+      return;
+
+    }
+
+
+    document.documentElement
+      .classList
+      .add(
+        'bi-gallery-mode'
+      );
+
+
+    document.body
+      .classList
+      .add(
+        'bi-gallery-mode'
+      );
+
+
+    let root =
+      document.getElementById(
+        'bi-mobile-gallery'
+      );
+
+
+    if (root) {
+
+      return;
+
+    }
+
+
+    const path =
+      getPath();
+
+
+    const item =
+      section.items.find(
+        function(entry) {
+
+          return (
+            entry.href ===
+            path
+          );
+
+        }
+      );
+
+
+    const title =
+
+      item
+
+      ? item.name
+
+      : document.title
+          .split('|')[0]
+          .split('—')[0]
+          .trim();
+
+
+
+    root =
+      document.createElement(
+        'div'
+      );
+
+
+    root.id =
+      'bi-mobile-gallery';
+
+
+
+    root.innerHTML = `
+
+      <div
+        class="bi-gallery-top-fade"
+      ></div>
+
+
+      <a
+        href="${section.path}"
+        class="
+          bi-gallery-back
+          bi-glass
+        "
+        aria-label="Back"
+      >
+
+        <i
+          data-lucide="arrow-left"
+        ></i>
+
+      </a>
+
+
+      ${galleryLogoHTML()}
+
+
+      <div
+        class="bi-gallery-content"
+      >
+
+        <h1
+          class="bi-gallery-title"
+        >
+          ${escapeHTML(title)}
+        </h1>
+
+
+        <div
+          id="bi-gallery-loading"
+          class="bi-gallery-loading"
+        >
+
+          <div
+            class="bi-gallery-loading-ring"
+          ></div>
+
+        </div>
+
+
+        <div
+          id="bi-masonry"
+          class="bi-masonry"
+        ></div>
+
+      </div>
+
+
+      ${navHTML(
+        section.id
+      )}
+
+    `;
+
+
+    document.body
+      .appendChild(
+        root
+      );
+
+
+    refreshIcons();
+
+
+    const masonry =
+      root.querySelector(
+        '#bi-masonry'
+      );
+
+
+    const loader =
+      root.querySelector(
+        '#bi-gallery-loading'
+      );
+
+
+    try {
+
+      const images =
+        await getGalleryImages(
+          path
+        );
+
+
+      images.forEach(
+        function(
+          src,
+          index
+        ) {
+
+          const galleryItem =
+            document.createElement(
+              'div'
+            );
+
+
+          galleryItem.className =
+            'bi-masonry-item';
+
+
+          const img =
+            document.createElement(
+              'img'
+            );
+
+
+          img.src =
+            src;
+
+
+          img.alt =
+            title +
+            ' photo ' +
+            (index + 1);
+
+
+          img.loading =
+            index < 6
+            ? 'eager'
+            : 'lazy';
+
+
+          galleryItem.appendChild(
+            img
+          );
+
+
+          masonry.appendChild(
+            galleryItem
+          );
+
+        }
+      );
+
+
+    } catch(error) {
+
+      console.error(
+        'Basiciggy gallery:',
+        error
+      );
+
+    }
+
+
+    if (loader) {
+
+      loader.remove();
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     MAP
+     ========================================================= */
+
+  let map =
+    null;
+
+
+  let mapOverlay =
+    null;
+
+
+
+  function createMapOverlay() {
+
+    if (
+      mapOverlay
+    ) {
+
+      return mapOverlay;
+
+    }
+
+
+    mapOverlay =
+      document.createElement(
+        'div'
+      );
+
+
+    mapOverlay.id =
+      'bi-map-overlay';
+
+
+
+    mapOverlay.innerHTML = `
+
+      <div
+        id="bi-travel-map"
+      ></div>
+
+
+      <div
+        class="bi-map-top-fade"
+      ></div>
+
+
+      <div
+        class="bi-map-header"
+      >
+
+        <button
+          id="bi-map-close"
+          class="
+            bi-map-close
+            bi-glass
+          "
+          type="button"
+          aria-label="Close map"
+        >
+
+          <i
+            data-lucide="x"
+          ></i>
+
+        </button>
+
+
+        <div
+          class="bi-map-title"
+        >
+          Travel Map
+        </div>
+
+      </div>
+
+
+      <div
+        id="bi-map-preview"
+        class="
+          bi-map-preview
+          bi-glass
+        "
+      >
+
+        <div
+          id="bi-map-preview-images"
+          class="bi-map-preview-images"
+        ></div>
+
+
+        <div
+          class="bi-map-preview-bottom"
+        >
+
+          <div
+            class="bi-map-preview-copy"
+          >
+
+            <div
+              class="bi-map-preview-label"
+            >
+              Gallery
+            </div>
+
+
+            <div
+              id="bi-map-preview-title"
+              class="bi-map-preview-title"
+            ></div>
+
+
+            <div
+              id="bi-map-preview-count"
+              class="bi-map-preview-count"
+            ></div>
+
+          </div>
+
+
+          <a
+            id="bi-map-view-gallery"
+            class="bi-map-view-gallery"
+            href="/adventures"
+          >
+
+            View Gallery
+
+            <i
+              data-lucide="arrow-up-right"
+            ></i>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    document.body
+      .appendChild(
+        mapOverlay
+      );
+
+
+    refreshIcons();
+
+
+
+    mapOverlay
+      .querySelector(
+        '#bi-map-close'
+      )
+      .addEventListener(
+        'click',
+        closeMap
+      );
+
+
+    return mapOverlay;
+
+  }
+
+
+
+  /* =========================================================
+     OPEN MAP
+     ========================================================= */
+
+  function openMap() {
+
+    const overlay =
+      createMapOverlay();
+
+
+    overlay.classList.add(
+      'bi-open'
+    );
+
+
+
+    if (!map) {
+
+      map =
+        L.map(
+          'bi-travel-map',
+          {
+
+            zoomControl:
+              false,
+
+            attributionControl:
+              true,
+
+            worldCopyJump:
+              true,
+
+            preferCanvas:
+              true
+
+          }
+        );
+
+
+
+      /* ===================================================
+         CARTO DARK RASTER BASEMAP
+         API KEY INCLUDED
+         =================================================== */
+
+      const cartoURL =
+
+        'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key='
+
+        +
+
+        encodeURIComponent(
+          CARTO_API_KEY
+        );
+
+
+
+      L.tileLayer(
+
+        cartoURL,
+
+        {
+
+          maxZoom:
+            20,
+
+          attribution:
+            '&copy; OpenStreetMap &copy; CARTO'
+
+        }
+
+      ).addTo(
+        map
+      );
+
+
+
+      /* ===================================================
+         CUSTOM PIN
+         =================================================== */
+
+      const pinIcon =
+        L.divIcon({
+
+          className:
+            'bi-map-pin-wrapper',
+
+          html:
+            '<div class="bi-map-pin"></div>',
+
+          iconSize:
+            [24,24],
+
+          iconAnchor:
+            [12,12]
+
+        });
+
+
+
+      const bounds =
+        [];
+
+
+
+      /* ===================================================
+         ADD ADVENTURE PINS
+         =================================================== */
+
+      adventures.forEach(
+        function(trip) {
+
+          const marker =
+            L.marker(
+
+              [
+                trip.lat,
+                trip.lng
+              ],
+
+              {
+                icon:
+                  pinIcon
+              }
+
+            )
+            .addTo(
+              map
+            );
+
+
+          marker.on(
+            'click',
+            function() {
+
+              showMapPreview(
+                trip
+              );
+
+            }
+          );
+
+
+          bounds.push(
+
+            [
+              trip.lat,
+              trip.lng
+            ]
+
+          );
+
+        }
+      );
+
+
+
+      map.fitBounds(
+
+        bounds,
+
+        {
+
+          padding:
+            [48,48]
+
+        }
+
+      );
+
+    }
+
+
+
+    window.setTimeout(
+      function() {
+
+        map.invalidateSize();
+
+      },
+      120
+    );
+
+  }
+
+
+
+  /* =========================================================
+     CLOSE MAP
+     ========================================================= */
+
+  function closeMap() {
+
+    if (!mapOverlay) {
+
+      return;
+
+    }
+
+
+    mapOverlay
+      .classList
+      .remove(
+        'bi-open'
+      );
+
+
+    const preview =
+      document.getElementById(
+        'bi-map-preview'
+      );
+
+
+    if (preview) {
+
+      preview
+        .classList
+        .remove(
+          'bi-visible'
+        );
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     MAP PIN → GALLERY PREVIEW
+     ========================================================= */
+
+  async function showMapPreview(
+    trip
+  ) {
+
+    const preview =
+      document.getElementById(
+        'bi-map-preview'
+      );
+
+
+    const title =
+      document.getElementById(
+        'bi-map-preview-title'
+      );
+
+
+    const count =
+      document.getElementById(
+        'bi-map-preview-count'
+      );
+
+
+    const imageHolder =
+      document.getElementById(
+        'bi-map-preview-images'
+      );
+
+
+    const button =
+      document.getElementById(
+        'bi-map-view-gallery'
+      );
+
+
+    title.textContent =
+      trip.name;
+
+
+    count.textContent =
+      'Loading preview…';
+
+
+    button.href =
+      trip.href;
+
+
+    imageHolder.innerHTML =
+      '';
+
+
+    preview
+      .classList
+      .add(
+        'bi-visible'
+      );
+
+
+
+    try {
+
+      const images =
+        await getGalleryImages(
+          trip.href
+        );
+
+
+      count.textContent =
+
+        images.length +
+
+        (
+          images.length === 1
+            ? ' photo'
+            : ' photos'
+        );
+
+
+
+      images
+        .slice(
+          0,
+          3
+        )
+        .forEach(
+          function(src) {
+
+            const image =
+              document.createElement(
+                'img'
+              );
+
+
+            image.className =
+              'bi-map-preview-image';
+
+
+            image.src =
+              src;
+
+
+            image.alt =
+              trip.name;
+
+
+            imageHolder
+              .appendChild(
+                image
+              );
+
+          }
+        );
+
+
+
+      while (
+        imageHolder.children.length <
+        3
+      ) {
+
+        const filler =
+          document.createElement(
+            'div'
+          );
+
+
+        filler.className =
+          'bi-map-preview-image';
+
+
+        imageHolder
+          .appendChild(
+            filler
+          );
+
+      }
+
+
+    } catch(error) {
+
+      count.textContent =
+        'Open gallery';
+
+    }
+
+
+    refreshIcons();
+
+  }
+
+
+
+  /* =========================================================
+     CLEAR CUSTOM UI
+     ========================================================= */
+
+  function clearCustomUI() {
+
+    document.documentElement
+      .classList
+      .remove(
+        'bi-index-mode',
+        'bi-gallery-mode'
+      );
+
+
+    document.body
+      .classList
+      .remove(
+        'bi-index-mode',
+        'bi-gallery-mode'
+      );
+
+
+    const indexRoot =
+      document.getElementById(
+        'bi-mobile-index'
+      );
+
+
+    const galleryRoot =
+      document.getElementById(
+        'bi-mobile-gallery'
+      );
+
+
+    if (indexRoot) {
+
+      indexRoot.remove();
+
+    }
+
+
+    if (galleryRoot) {
+
+      galleryRoot.remove();
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     ROUTER
+     ========================================================= */
+
+  function route() {
+
+    if (!isMobile()) {
+
+      clearCustomUI();
+
+      closeMap();
+
+      return;
+
+    }
+
+
+    const section =
+      currentSection();
+
+
+    if (!section) {
+
+      clearCustomUI();
+
+      closeMap();
+
+      return;
+
+    }
+
+
+
+    /* =====================================================
+       SECTION INDEX
+       ===================================================== */
+
+    if (
+      isSectionIndex(
+        section
+      )
+    ) {
+
+      document.documentElement
+        .classList
+        .remove(
+          'bi-gallery-mode'
+        );
+
+
+      document.body
+        .classList
+        .remove(
+          'bi-gallery-mode'
+        );
+
+
+      const oldGallery =
+        document.getElementById(
+          'bi-mobile-gallery'
+        );
+
+
+      if (oldGallery) {
+
+        oldGallery.remove();
+
+      }
+
+
+      mountIndex(
+        section
+      );
+
+
+      return;
+
+    }
+
+
+
+    /* =====================================================
+       SECTION GALLERY
+       ===================================================== */
+
+    if (
+      isSectionGallery(
+        section
+      )
+    ) {
+
+      document.documentElement
+        .classList
+        .remove(
+          'bi-index-mode'
+        );
+
+
+      document.body
+        .classList
+        .remove(
+          'bi-index-mode'
+        );
+
+
+      const oldIndex =
+        document.getElementById(
+          'bi-mobile-index'
+        );
+
+
+      if (oldIndex) {
+
+        oldIndex.remove();
+
+      }
+
+
+      closeMap();
+
+
+      mountGallery(
+        section
+      );
+
+
+      return;
+
+    }
+
+
+
+    clearCustomUI();
+
+  }
+
+
+
+  /* =========================================================
+     INIT
+     ========================================================= */
+
+  function init() {
+
+    route();
+
+    refreshIcons();
+
+  }
+
+
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+
+      'DOMContentLoaded',
+
+      init,
+
+      {
+        once: true
+      }
+
+    );
+
+
+  } else {
+
+    init();
+
+  }
+
+
+
+  /* =========================================================
+     SAFARI BACK/FORWARD
+     ========================================================= */
+
+  window.addEventListener(
+    'pageshow',
+    route
+  );
+
+
+  window.addEventListener(
+    'popstate',
+    route
+  );
+
+
+
+  /* =========================================================
+     RESIZE / ROTATION
+     ========================================================= */
+
+  let resizeTimer;
+
+
+  window.addEventListener(
+
+    'resize',
+
+    function() {
+
+      clearTimeout(
+        resizeTimer
+      );
+
+
+      resizeTimer =
+        window.setTimeout(
+
+          function() {
+
+            route();
+
+
+            fitAllTitles();
+
+
+
+            if (
+              map &&
+              mapOverlay &&
+              mapOverlay
+                .classList
+                .contains(
+                  'bi-open'
+                )
+            ) {
+
+              map.invalidateSize();
+
+            }
+
+          },
+
+          120
+
+        );
+
+    },
+
+    {
+      passive: true
+    }
+
+  );
+
+
+})();
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================
+     BASICIGGY — MOBILE HOME V3
+     
+     MOBILE HOMEPAGE ONLY
+     /
+     
+     FEATURES
+     - Minimal cinematic full-screen hero
+     - Centered Basiciggy logo
+     - EXPLORE / CREATE / EXPERIENCE
+     - Perfectly centered Explore scroll indicator
+     - Subtle blur / reveal / parallax animations
+     - Adventures card uses first photo from TOP Adventures gallery
+     - Lifestyle card uses first photo from TOP Lifestyle gallery
+     - Automatically follows section order
+     - Home / Lifestyle / Trips floating nav
+     
+     DESKTOP
+     - Existing Squarespace homepage unchanged
+     
+     KEEP YOUR V7 ADVENTURES/LIFESTYLE CODE.
+     REPLACE ONLY YOUR OLD HOME PAGE CODE WITH THIS.
+     ========================================================= -->
+
+
+<style>
+
+@media screen and (max-width: 767px) {
+
+
+  /* =======================================================
+     MOBILE HOME MODE
+     ======================================================= */
+
+  html.bi-home-mode,
+  body.bi-home-mode {
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    background:
+      #08080a !important;
+  }
+
+
+  body.bi-home-mode #siteWrapper {
+    display:
+      none !important;
+  }
+
+
+  #bi-mobile-home {
+    position: fixed;
+
+    inset: 0;
+
+    z-index:
+      2147482900;
+
+    display: block;
+
+    width: 100vw;
+    height: 100dvh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    color: #fff;
+
+    background:
+      #08080a;
+
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
+
+    overscroll-behavior:
+      contain;
+
+    -webkit-overflow-scrolling:
+      touch;
+
+    scrollbar-width:
+      none;
+  }
+
+
+  #bi-mobile-home::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  #bi-mobile-home *,
+  #bi-mobile-home *::before,
+  #bi-mobile-home *::after {
+    box-sizing:
+      border-box;
+  }
+
+
+
+  /* =======================================================
+     HERO
+     ======================================================= */
+
+  .bi-home-hero {
+    position: relative;
+
+    width: 100%;
+    height: 100dvh;
+
+    min-height:
+      640px;
+
+    overflow:
+      hidden;
+
+    isolation:
+      isolate;
+
+    background:
+      #09090b;
+  }
+
+
+
+  /* =======================================================
+     HERO PHOTO
+     ======================================================= */
+
+  .bi-home-hero-media {
+    position: absolute;
+
+    inset:
+      -7% -4%;
+
+    z-index: 1;
+
+    will-change:
+      transform;
+  }
+
+
+  .bi-home-hero-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit:
+      cover;
+
+    object-position:
+      center;
+
+    opacity: 0;
+
+    filter:
+      blur(18px);
+
+    transform:
+      scale(1.10);
+
+    transition:
+      opacity 1.35s cubic-bezier(.2,.7,.2,1),
+      filter 1.8s cubic-bezier(.2,.7,.2,1);
+  }
+
+
+  .bi-home-hero-image.bi-loaded {
+    opacity: 1;
+
+    filter:
+      blur(0);
+
+    animation:
+      bi-home-breathe
+      17s
+      ease-in-out
+      infinite
+      alternate;
+  }
+
+
+  @keyframes bi-home-breathe {
+
+    from {
+      transform:
+        scale(1.10);
+    }
+
+    to {
+      transform:
+        scale(1.155);
+    }
+
+  }
+
+
+
+  /* =======================================================
+     HERO SHADING
+     ======================================================= */
+
+  .bi-home-hero-shade {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events:
+      none;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(5,5,7,.25) 0%,
+        rgba(5,5,7,.03) 24%,
+        rgba(5,5,7,.04) 50%,
+        rgba(5,5,7,.29) 73%,
+        rgba(5,5,7,.92) 100%
+      );
+  }
+
+
+  .bi-home-hero-vignette {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    pointer-events:
+      none;
+
+    background:
+      radial-gradient(
+        ellipse at center,
+        transparent 36%,
+        rgba(0,0,0,.08) 62%,
+        rgba(0,0,0,.34) 100%
+      );
+  }
+
+
+
+  /* =======================================================
+     CENTERED BASICIGGY LOGO
+     ======================================================= */
+
+  .bi-home-logo {
+    position: absolute;
+
+    z-index: 20;
+
+    top:
+      calc(
+        env(safe-area-inset-top)
+        + 22px
+      );
+
+    left: 50%;
+
+    display: block;
+
+    width: auto;
+    height: 28px;
+
+    max-width:
+      64px;
+
+    object-fit:
+      contain;
+
+    transform:
+      translateX(-50%)
+      translateY(-6px)
+      scale(.96);
+
+    opacity: 0;
+
+    animation:
+      bi-home-logo-intro
+      1.1s
+      .15s
+      cubic-bezier(.2,.75,.25,1)
+      forwards;
+
+    pointer-events:
+      none;
+  }
+
+
+  @keyframes bi-home-logo-intro {
+
+    to {
+      opacity: 1;
+
+      transform:
+        translateX(-50%)
+        translateY(0)
+        scale(1);
+    }
+
+  }
+
+
+
+  /* =======================================================
+     CENTER HERO WORDS
+     ======================================================= */
+
+  .bi-home-hero-copy {
+    position: absolute;
+
+    z-index: 10;
+
+    left: 50%;
+    top: 49%;
+
+    transform:
+      translate(-50%,-50%);
+
+    display: flex;
+
+    width: 100%;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    pointer-events:
+      none;
+
+    will-change:
+      opacity,
+      transform;
+  }
+
+
+  .bi-home-word {
+    display:
+      block;
+
+    margin:
+      4px 0;
+
+    color:
+      rgba(255,255,255,.91);
+
+    font-size:
+      10px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1.2;
+
+    letter-spacing:
+      .42em;
+
+    text-indent:
+      .42em;
+
+    opacity: 0;
+
+    transform:
+      translateY(12px);
+
+    animation:
+      bi-home-word-in
+      .9s
+      cubic-bezier(.2,.75,.25,1)
+      forwards;
+  }
+
+
+  .bi-home-word:nth-child(1) {
+    animation-delay:
+      .48s;
+  }
+
+
+  .bi-home-word:nth-child(2) {
+    animation-delay:
+      .62s;
+  }
+
+
+  .bi-home-word:nth-child(3) {
+    animation-delay:
+      .76s;
+  }
+
+
+  @keyframes bi-home-word-in {
+
+    to {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+    }
+
+  }
+
+
+
+  /* =======================================================
+     PERFECTLY CENTERED EXPLORE INDICATOR
+     ======================================================= */
+
+  .bi-home-scroll-cue {
+    position: absolute;
+
+    z-index: 15;
+
+    left: 0;
+    right: 0;
+
+    bottom:
+      calc(
+        env(safe-area-inset-bottom)
+        + 34px
+      );
+
+    display: flex;
+
+    width: 100%;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      10px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    appearance:
+      none;
+
+    -webkit-appearance:
+      none;
+
+    background:
+      transparent;
+
+    color:
+      rgba(255,255,255,.68);
+
+    text-align:
+      center;
+
+    opacity: 0;
+
+    animation:
+      bi-home-scroll-in
+      .9s
+      1.05s
+      ease
+      forwards;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  @keyframes bi-home-scroll-in {
+
+    to {
+      opacity: 1;
+    }
+
+  }
+
+
+  .bi-home-scroll-label {
+    display:
+      block;
+
+    margin: 0;
+
+    /*
+       Offset compensates for letter-spacing so
+       visual center stays exact.
+    */
+
+    padding-left:
+      .34em;
+
+    color:
+      rgba(255,255,255,.68);
+
+    font-size:
+      8px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .34em;
+
+    text-align:
+      center;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  .bi-home-scroll-line {
+    position: relative;
+
+    display:
+      block;
+
+    width:
+      1px;
+
+    height:
+      42px;
+
+    margin:
+      0 auto;
+
+    overflow:
+      hidden;
+
+    background:
+      rgba(255,255,255,.22);
+  }
+
+
+  .bi-home-scroll-line::after {
+    content: '';
+
+    position: absolute;
+
+    top:
+      -100%;
+
+    left: 0;
+
+    width:
+      1px;
+
+    height:
+      100%;
+
+    background:
+      rgba(255,255,255,.95);
+
+    animation:
+      bi-home-scroll-line
+      2s
+      1.2s
+      ease-in-out
+      infinite;
+  }
+
+
+  @keyframes bi-home-scroll-line {
+
+    0% {
+      transform:
+        translateY(0);
+    }
+
+    60%,
+    100% {
+      transform:
+        translateY(200%);
+    }
+
+  }
+
+
+
+  /* =======================================================
+     CATEGORY AREA
+     ======================================================= */
+
+  .bi-home-sections {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    min-height:
+      100dvh;
+
+    padding:
+      74px
+      14px
+      calc(
+        env(safe-area-inset-bottom)
+        + 120px
+      );
+
+    background:
+      linear-gradient(
+        to bottom,
+        #08080a,
+        #0b0b0d
+      );
+  }
+
+
+
+  /* =======================================================
+     INTRO ABOVE CARDS
+     ======================================================= */
+
+  .bi-home-section-intro {
+    display: flex;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    margin:
+      0 0 34px;
+
+    text-align:
+      center;
+  }
+
+
+  .bi-home-kicker {
+    color:
+      rgba(255,255,255,.39);
+
+    font-size:
+      8px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .34em;
+
+    text-indent:
+      .34em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  .bi-home-intro-line {
+    width:
+      1px;
+
+    height:
+      33px;
+
+    margin-top:
+      16px;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(255,255,255,.50),
+        rgba(255,255,255,.04)
+      );
+  }
+
+
+
+  /* =======================================================
+     HOME CATEGORY CARDS
+     ======================================================= */
+
+  .bi-home-category {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: 238px;
+
+    margin:
+      0 0 14px;
+
+    overflow:
+      hidden;
+
+    border-radius:
+      26px;
+
+    background:
+      #171719;
+
+    color:
+      #fff;
+
+    text-decoration:
+      none;
+
+    opacity: 0;
+
+    transform:
+      translateY(28px)
+      scale(.985);
+
+    transition:
+      opacity .85s cubic-bezier(.2,.75,.25,1),
+      transform .85s cubic-bezier(.2,.75,.25,1),
+      border-radius .32s ease;
+
+    isolation:
+      isolate;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-home-category.bi-revealed {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+
+  .bi-home-category.bi-opening {
+    transform:
+      scale(1.025);
+
+    border-radius:
+      18px;
+  }
+
+
+
+  /* =======================================================
+     CATEGORY PHOTOS
+     ======================================================= */
+
+  .bi-home-category-image {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit:
+      cover;
+
+    object-position:
+      center;
+
+    opacity: 0;
+
+    filter:
+      blur(10px);
+
+    transform:
+      scale(1.04);
+
+    transition:
+      opacity .9s ease,
+      filter 1.1s ease,
+      transform .7s cubic-bezier(.2,.75,.25,1);
+  }
+
+
+  .bi-home-category-image.bi-loaded {
+    opacity: 1;
+
+    filter:
+      blur(0);
+  }
+
+
+  .bi-home-category:active
+  .bi-home-category-image {
+    transform:
+      scale(1.07);
+  }
+
+
+  .bi-home-category-shade {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events:
+      none;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,.02),
+        rgba(0,0,0,.05) 45%,
+        rgba(0,0,0,.67) 100%
+      );
+  }
+
+
+
+  /* =======================================================
+     CATEGORY TEXT
+     ======================================================= */
+
+  .bi-home-category-copy {
+    position: absolute;
+
+    z-index: 4;
+
+    left: 18px;
+    right: 64px;
+    bottom: 18px;
+  }
+
+
+  .bi-home-category-title {
+    margin:
+      0 0 7px;
+
+    color:
+      rgba(255,255,255,.98);
+
+    font-size:
+      20px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .22em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  .bi-home-category-meta {
+    color:
+      rgba(255,255,255,.59);
+
+    font-size:
+      8px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .22em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+
+  /* =======================================================
+     CARD ARROW
+     ======================================================= */
+
+  .bi-home-category-arrow {
+    position: absolute;
+
+    z-index: 5;
+
+    right:
+      15px;
+
+    bottom:
+      15px;
+
+    display: flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    width:
+      43px;
+
+    height:
+      43px;
+
+    border:
+      1px solid
+      rgba(255,255,255,.16);
+
+    border-radius:
+      50%;
+
+    background:
+      rgba(18,18,20,.42);
+
+    backdrop-filter:
+      blur(18px);
+
+    -webkit-backdrop-filter:
+      blur(18px);
+
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.14);
+  }
+
+
+  .bi-home-category-arrow svg {
+    width:
+      17px;
+
+    height:
+      17px;
+
+    stroke-width:
+      1.7;
+  }
+
+
+
+  /* =======================================================
+     SMALL CURRENT GALLERY LABEL
+     ======================================================= */
+
+  .bi-home-current {
+    position: absolute;
+
+    z-index: 5;
+
+    top:
+      14px;
+
+    left:
+      14px;
+
+    display: flex;
+
+    align-items:
+      center;
+
+    height:
+      27px;
+
+    padding:
+      0 10px;
+
+    border:
+      1px solid
+      rgba(255,255,255,.12);
+
+    border-radius:
+      999px;
+
+    background:
+      rgba(16,16,18,.38);
+
+    backdrop-filter:
+      blur(14px);
+
+    -webkit-backdrop-filter:
+      blur(14px);
+
+    color:
+      rgba(255,255,255,.75);
+
+    font-size:
+      9px;
+
+    font-weight:
+      500;
+
+    letter-spacing:
+      .07em;
+
+    opacity: 0;
+
+    transition:
+      opacity .4s ease;
+  }
+
+
+  .bi-home-current.bi-visible {
+    opacity: 1;
+  }
+
+
+
+  /* =======================================================
+     FOOTER
+     ======================================================= */
+
+  .bi-home-footer-copy {
+    padding:
+      44px 12px 20px;
+
+    text-align:
+      center;
+
+    color:
+      rgba(255,255,255,.27);
+
+    font-size:
+      8px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .24em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+
+  /* =======================================================
+     FLOATING NAV
+     Hidden during clean hero.
+     ======================================================= */
+
+  .bi-home-nav {
+    position: fixed;
+
+    z-index:
+      2147483600;
+
+    left: 50%;
+
+    bottom:
+      calc(
+        env(safe-area-inset-bottom)
+        + 15px
+      );
+
+    transform:
+      translateX(-50%)
+      translateY(18px)
+      scale(.96);
+
+    display: flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      25px;
+
+    padding:
+      10px 22px 9px;
+
+    border:
+      1px solid
+      rgba(255,255,255,.10);
+
+    border-radius:
+      999px;
+
+    background:
+      rgba(28,28,31,.66);
+
+    backdrop-filter:
+      blur(26px)
+      saturate(160%);
+
+    -webkit-backdrop-filter:
+      blur(26px)
+      saturate(160%);
+
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.16),
+      0 14px 38px rgba(0,0,0,.30);
+
+    opacity: 0;
+
+    visibility:
+      hidden;
+
+    pointer-events:
+      none;
+
+    transition:
+      opacity .4s ease,
+      transform .45s cubic-bezier(.2,.75,.25,1),
+      visibility .4s;
+  }
+
+
+  .bi-home-nav.bi-visible {
+    opacity: 1;
+
+    visibility:
+      visible;
+
+    pointer-events:
+      auto;
+
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1);
+  }
+
+
+  .bi-home-nav-link {
+    display: flex;
+
+    min-width:
+      48px;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      3px;
+
+    color:
+      rgba(255,255,255,.43);
+
+    font-size:
+      10px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    text-decoration:
+      none;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .bi-home-nav-link.bi-active {
+    color: #fff;
+  }
+
+
+  .bi-home-nav-link svg {
+    width:
+      20px;
+
+    height:
+      20px;
+
+    stroke-width:
+      1.8;
+  }
+
+
+
+  /* =======================================================
+     PAGE TRANSITION
+     ======================================================= */
+
+  .bi-home-transition {
+    position: fixed;
+
+    inset: 0;
+
+    z-index:
+      2147483700;
+
+    pointer-events:
+      none;
+
+    background:
+      #08080a;
+
+    opacity: 0;
+
+    transition:
+      opacity .32s ease;
+  }
+
+
+  .bi-home-transition.bi-active {
+    opacity: 1;
+  }
+
+
+
+  /* =======================================================
+     REDUCED MOTION
+     ======================================================= */
+
+  @media (
+    prefers-reduced-motion:
+    reduce
+  ) {
+
+    .bi-home-hero-image.bi-loaded {
+      animation:
+        none;
+
+      transform:
+        scale(1.10);
+    }
+
+
+    .bi-home-logo,
+    .bi-home-word,
+    .bi-home-scroll-cue,
+    .bi-home-scroll-line::after {
+      animation:
+        none;
+
+      opacity: 1;
+    }
+
+
+    .bi-home-logo {
+      transform:
+        translateX(-50%);
+    }
+
+
+    .bi-home-category {
+      transition:
+        none;
+    }
+
+  }
+
+
+
+  /* =======================================================
+     SMALL PHONES
+     ======================================================= */
+
+  @media screen and (max-width: 350px) {
+
+    .bi-home-sections {
+      padding-left:
+        10px;
+
+      padding-right:
+        10px;
+    }
+
+
+    .bi-home-category {
+      height:
+        220px;
+    }
+
+
+    .bi-home-category-title {
+      font-size:
+        18px;
+    }
+
+
+    .bi-home-nav {
+      gap:
+        18px;
+
+      padding-left:
+        18px;
+
+      padding-right:
+        18px;
+    }
+
+  }
+
+
+}
+
+</style>
+
+
+
+<script>
+
+(function () {
+
+  'use strict';
+
+
+
+  /* =========================================================
+     CONFIG
+     ========================================================= */
+
+  const MOBILE_BREAKPOINT =
+    767;
+
+
+  const LOGO_URL =
+    'https://images.squarespace-cdn.com/content/574df21d40261ddf2101a3f1/0fe84dd4-bc34-45db-b3ff-e416fa0c7fb2/basiciggy+logo+2026.png?content-type=image%2Fpng';
+
+
+
+  /*
+     Fallbacks.
+
+     If Squarespace's index parsing ever fails,
+     Adventures still uses Banff.
+
+     Lifestyle fallback is PokePark Kanto.
+  */
+
+  const SECTION_FALLBACKS = {
+
+    adventures:
+      '/adventures/banff',
+
+    lifestyle:
+      '/lifestyle/pokepark-kanto'
+
+  };
+
+
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+
+  function isMobile() {
+
+    return window.matchMedia(
+      `(max-width:${MOBILE_BREAKPOINT}px)`
+    ).matches;
+
+  }
+
+
+
+  function currentPath() {
+
+    let path =
+      window.location.pathname
+        .replace(/\/+$/, '');
+
+
+    if (!path) {
+      path = '/';
+    }
+
+
+    return path;
+
+  }
+
+
+
+  function isHome() {
+
+    return (
+      currentPath() === '/'
+    );
+
+  }
+
+
+
+  function refreshIcons() {
+
+    if (!window.lucide) {
+      return;
+    }
+
+
+    window.lucide.createIcons({
+
+      attrs: {
+
+        'stroke-width':
+          1.8
+
+      }
+
+    });
+
+  }
+
+
+
+  /* =========================================================
+     URL / IMAGE HELPERS
+     ========================================================= */
+
+  function normalizeImageURL(
+    src
+  ) {
+
+    if (!src) {
+      return null;
+    }
+
+
+    try {
+
+      const url =
+        new URL(
+          src,
+          window.location.origin
+        );
+
+
+      if (
+        url.hostname.includes(
+          'squarespace'
+        )
+      ) {
+
+        url.searchParams.set(
+          'format',
+          '1800w'
+        );
+
+      }
+
+
+      return url.href;
+
+
+    } catch(error) {
+
+      return src;
+
+    }
+
+  }
+
+
+
+  function getImageSource(
+    image
+  ) {
+
+    return (
+
+      image.getAttribute(
+        'data-src'
+      ) ||
+
+      image.getAttribute(
+        'data-image'
+      ) ||
+
+      image.getAttribute(
+        'data-load'
+      ) ||
+
+      image.getAttribute(
+        'src'
+      ) ||
+
+      null
+
+    );
+
+  }
+
+
+
+  function shouldIgnoreImage(
+    src
+  ) {
+
+    if (!src) {
+      return true;
+    }
+
+
+    const lower =
+      src.toLowerCase();
+
+
+    return (
+
+      lower.startsWith(
+        'data:'
+      ) ||
+
+      lower.includes(
+        'favicon'
+      ) ||
+
+      lower.includes(
+        'avatar'
+      ) ||
+
+      lower.includes(
+        'basiciggy+logo'
+      ) ||
+
+      lower.includes(
+        'basiciggy%20logo'
+      )
+
+    );
+
+  }
+
+
+
+  /* =========================================================
+     EXTRACT PHOTOS
+     ========================================================= */
+
+  function extractPhotosFromDocument(
+    doc
+  ) {
+
+    const selectors = [
+
+      '.gallery-grid-item img',
+
+      '.gallery-masonry-item img',
+
+      '.sqs-gallery img',
+
+      '.sqs-block-image img',
+
+      '.fluid-image-container img',
+
+      'main img'
+
+    ];
+
+
+    const nodes =
+      Array.from(
+        doc.querySelectorAll(
+          selectors.join(',')
+        )
+      );
+
+
+    const images =
+      [];
+
+
+    const used =
+      new Set();
+
+
+
+    nodes.forEach(
+      function(image) {
+
+        let src =
+          getImageSource(
+            image
+          );
+
+
+        if (
+          shouldIgnoreImage(
+            src
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        src =
+          normalizeImageURL(
+            src
+          );
+
+
+        const key =
+          src.split('?')[0];
+
+
+        if (
+          used.has(key)
+        ) {
+
+          return;
+
+        }
+
+
+        used.add(key);
+
+
+        images.push(
+          src
+        );
+
+      }
+    );
+
+
+    return images;
+
+  }
+
+
+
+  /* =========================================================
+     FETCH A SQUARESPACE PAGE
+     ========================================================= */
+
+  async function fetchDocument(
+    path
+  ) {
+
+    const response =
+      await fetch(
+        path,
+        {
+          credentials:
+            'same-origin'
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        'Could not load ' +
+        path
+      );
+
+    }
+
+
+    const html =
+      await response.text();
+
+
+    return new DOMParser()
+      .parseFromString(
+        html,
+        'text/html'
+      );
+
+  }
+
+
+
+  /* =========================================================
+     FIND TOP GALLERY LINK
+     
+     This scans the actual section page.
+     
+     Adventures:
+     top gallery currently = Banff.
+     
+     Lifestyle:
+     pulls whatever appears first on Lifestyle.
+     ========================================================= */
+
+  async function findTopGallery(
+    sectionPath,
+    fallback
+  ) {
+
+    try {
+
+      const doc =
+        await fetchDocument(
+          sectionPath
+        );
+
+
+      /*
+         Start with content-area links only.
+         This avoids header/footer links as much as possible.
+      */
+
+      const selectors = [
+
+        'main a[href]',
+
+        '#page a[href]',
+
+        '#sections a[href]',
+
+        '.page-section a[href]'
+
+      ];
+
+
+      let links =
+        Array.from(
+          doc.querySelectorAll(
+            selectors.join(',')
+          )
+        );
+
+
+      /*
+         Fallback if template structure differs.
+      */
+
+      if (
+        !links.length
+      ) {
+
+        links =
+          Array.from(
+            doc.querySelectorAll(
+              'a[href]'
+            )
+          );
+
+      }
+
+
+      const used =
+        new Set();
+
+
+
+      for (
+        const link of links
+      ) {
+
+        const href =
+          link.getAttribute(
+            'href'
+          );
+
+
+        if (!href) {
+          continue;
+        }
+
+
+        let pathname;
+
+
+        try {
+
+          pathname =
+            new URL(
+              href,
+              window.location.origin
+            )
+            .pathname
+            .replace(
+              /\/+$/,
+              ''
+            );
+
+
+        } catch(error) {
+
+          continue;
+
+        }
+
+
+        if (
+          !pathname.startsWith(
+            sectionPath + '/'
+          )
+        ) {
+
+          continue;
+
+        }
+
+
+        if (
+          used.has(
+            pathname
+          )
+        ) {
+
+          continue;
+
+        }
+
+
+        used.add(
+          pathname
+        );
+
+
+        return pathname;
+
+      }
+
+
+    } catch(error) {
+
+      console.warn(
+        'Could not determine top gallery:',
+        sectionPath
+      );
+
+    }
+
+
+    return fallback;
+
+  }
+
+
+
+  /* =========================================================
+     FIND FIRST PHOTO FROM TOP GALLERY
+     ========================================================= */
+
+  async function getTopGalleryData(
+    sectionPath,
+    fallback
+  ) {
+
+    const galleryPath =
+      await findTopGallery(
+        sectionPath,
+        fallback
+      );
+
+
+    if (!galleryPath) {
+
+      return {
+        path: null,
+        title: '',
+        photo: null
+      };
+
+    }
+
+
+    try {
+
+      const doc =
+        await fetchDocument(
+          galleryPath
+        );
+
+
+      const photos =
+        extractPhotosFromDocument(
+          doc
+        );
+
+
+      let title =
+        '';
+
+
+      const heading =
+        doc.querySelector(
+          'main h1, #page h1, h1'
+        );
+
+
+      if (
+        heading &&
+        heading.textContent
+      ) {
+
+        title =
+          heading.textContent
+            .trim();
+
+      }
+
+
+      if (!title) {
+
+        const parts =
+          galleryPath
+            .split('/')
+            .filter(Boolean);
+
+
+        const slug =
+          parts[
+            parts.length - 1
+          ] || '';
+
+
+        title =
+          slug
+
+          .replace(
+            /-[a-z0-9]{5}$/,
+            ''
+          )
+
+          .replace(
+            /-/g,
+            ' '
+          )
+
+          .replace(
+            /\b\w/g,
+            function(letter) {
+
+              return letter
+                .toUpperCase();
+
+            }
+          );
+
+      }
+
+
+      return {
+
+        path:
+          galleryPath,
+
+        title:
+          title,
+
+        photo:
+          photos[0] || null
+
+      };
+
+
+    } catch(error) {
+
+      return {
+
+        path:
+          galleryPath,
+
+        title:
+          '',
+
+        photo:
+          null
+
+      };
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     HOMEPAGE HERO PHOTO
+     ========================================================= */
+
+  function getExistingHomepagePhoto() {
+
+    const photos =
+      extractPhotosFromDocument(
+        document
+      );
+
+
+    return (
+      photos[0] ||
+      null
+    );
+
+  }
+
+
+
+  /* =========================================================
+     SET IMAGE
+     ========================================================= */
+
+  function setImage(
+    image,
+    src
+  ) {
+
+    if (
+      !image ||
+      !src
+    ) {
+
+      return;
+
+    }
+
+
+    image.addEventListener(
+      'load',
+      function() {
+
+        image.classList.add(
+          'bi-loaded'
+        );
+
+      },
+
+      {
+        once:
+          true
+      }
+    );
+
+
+    image.src =
+      src;
+
+  }
+
+
+
+  /* =========================================================
+     SET CURRENT GALLERY LABEL
+     ========================================================= */
+
+  function setCurrentGallery(
+    element,
+    title
+  ) {
+
+    if (
+      !element ||
+      !title
+    ) {
+
+      return;
+
+    }
+
+
+    element.textContent =
+      title;
+
+
+    element.classList.add(
+      'bi-visible'
+    );
+
+  }
+
+
+
+  /* =========================================================
+     MOUNT HOME
+     ========================================================= */
+
+  function mountHome() {
+
+    if (
+      !isMobile() ||
+      !isHome()
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      document.getElementById(
+        'bi-mobile-home'
+      )
+    ) {
+
+      return;
+
+    }
+
+
+
+    /*
+       Capture current Squarespace homepage photo
+       BEFORE hiding Squarespace.
+    */
+
+    const originalHero =
+      getExistingHomepagePhoto();
+
+
+
+    document.documentElement
+      .classList
+      .add(
+        'bi-home-mode'
+      );
+
+
+    document.body
+      .classList
+      .add(
+        'bi-home-mode'
+      );
+
+
+
+    const root =
+      document.createElement(
+        'div'
+      );
+
+
+    root.id =
+      'bi-mobile-home';
+
+
+
+    root.innerHTML = `
+
+      <section
+        id="bi-home-hero"
+        class="bi-home-hero"
+      >
+
+        <div
+          id="bi-home-hero-media"
+          class="bi-home-hero-media"
+        >
+
+          <img
+            id="bi-home-hero-image"
+            class="bi-home-hero-image"
+            alt=""
+          />
+
+        </div>
+
+
+        <div
+          class="bi-home-hero-shade"
+        ></div>
+
+
+        <div
+          class="bi-home-hero-vignette"
+        ></div>
+
+
+        <img
+          class="bi-home-logo"
+          src="${LOGO_URL}"
+          alt="Basiciggy"
+        />
+
+
+        <div
+          id="bi-home-hero-copy"
+          class="bi-home-hero-copy"
+        >
+
+          <span
+            class="bi-home-word"
+          >
+            EXPLORE
+          </span>
+
+
+          <span
+            class="bi-home-word"
+          >
+            CREATE
+          </span>
+
+
+          <span
+            class="bi-home-word"
+          >
+            EXPERIENCE
+          </span>
+
+        </div>
+
+
+        <button
+          id="bi-home-scroll-cue"
+          class="bi-home-scroll-cue"
+          type="button"
+          aria-label="Explore photography"
+        >
+
+          <span
+            class="bi-home-scroll-label"
+          >
+            Explore
+          </span>
+
+
+          <span
+            class="bi-home-scroll-line"
+          ></span>
+
+        </button>
+
+      </section>
+
+
+
+      <section
+        id="bi-home-sections"
+        class="bi-home-sections"
+      >
+
+        <div
+          class="bi-home-section-intro"
+        >
+
+          <div
+            class="bi-home-kicker"
+          >
+            Select a world
+          </div>
+
+
+          <div
+            class="bi-home-intro-line"
+          ></div>
+
+        </div>
+
+
+
+        <!-- ===============================================
+             ADVENTURES
+             =============================================== -->
+
+        <a
+          href="/adventures"
+          class="bi-home-category"
+          data-bi-transition
+        >
+
+          <img
+            id="bi-home-adventure-image"
+            class="bi-home-category-image"
+            alt="Adventures"
+          />
+
+
+          <div
+            class="bi-home-category-shade"
+          ></div>
+
+
+          <div
+            id="bi-adventures-current"
+            class="bi-home-current"
+          >
+          </div>
+
+
+          <div
+            class="bi-home-category-copy"
+          >
+
+            <div
+              class="bi-home-category-title"
+            >
+              Adventures
+            </div>
+
+
+            <div
+              class="bi-home-category-meta"
+            >
+              Places · Landscapes · Experiences
+            </div>
+
+          </div>
+
+
+          <div
+            class="bi-home-category-arrow"
+          >
+
+            <i
+              data-lucide="arrow-right"
+            ></i>
+
+          </div>
+
+        </a>
+
+
+
+        <!-- ===============================================
+             LIFESTYLE
+             =============================================== -->
+
+        <a
+          href="/lifestyle"
+          class="bi-home-category"
+          data-bi-transition
+        >
+
+          <img
+            id="bi-home-lifestyle-image"
+            class="bi-home-category-image"
+            alt="Lifestyle"
+          />
+
+
+          <div
+            class="bi-home-category-shade"
+          ></div>
+
+
+          <div
+            id="bi-lifestyle-current"
+            class="bi-home-current"
+          >
+          </div>
+
+
+          <div
+            class="bi-home-category-copy"
+          >
+
+            <div
+              class="bi-home-category-title"
+            >
+              Lifestyle
+            </div>
+
+
+            <div
+              class="bi-home-category-meta"
+            >
+              Cars · Brands · Culture · People
+            </div>
+
+          </div>
+
+
+          <div
+            class="bi-home-category-arrow"
+          >
+
+            <i
+              data-lucide="arrow-right"
+            ></i>
+
+          </div>
+
+        </a>
+
+
+
+        <div
+          class="bi-home-footer-copy"
+        >
+          Photography · Isaac Garcia
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           FLOATING NAV
+           ================================================= -->
+
+      <nav
+        id="bi-home-nav"
+        class="bi-home-nav"
+      >
+
+        <a
+          href="/"
+          class="
+            bi-home-nav-link
+            bi-active
+          "
+        >
+
+          <i
+            data-lucide="home"
+          ></i>
+
+          <span>
+            Home
+          </span>
+
+        </a>
+
+
+        <a
+          href="/lifestyle"
+          class="bi-home-nav-link"
+        >
+
+          <i
+            data-lucide="camera"
+          ></i>
+
+          <span>
+            Lifestyle
+          </span>
+
+        </a>
+
+
+        <a
+          href="/adventures"
+          class="bi-home-nav-link"
+        >
+
+          <i
+            data-lucide="map"
+          ></i>
+
+          <span>
+            Trips
+          </span>
+
+        </a>
+
+      </nav>
+
+
+      <div
+        id="bi-home-transition"
+        class="bi-home-transition"
+      ></div>
+
+    `;
+
+
+
+    document.body
+      .appendChild(
+        root
+      );
+
+
+    refreshIcons();
+
+
+
+    /* =====================================================
+       IMAGE ELEMENTS
+       ===================================================== */
+
+    const heroImage =
+      root.querySelector(
+        '#bi-home-hero-image'
+      );
+
+
+    const adventureImage =
+      root.querySelector(
+        '#bi-home-adventure-image'
+      );
+
+
+    const lifestyleImage =
+      root.querySelector(
+        '#bi-home-lifestyle-image'
+      );
+
+
+    const adventureLabel =
+      root.querySelector(
+        '#bi-adventures-current'
+      );
+
+
+    const lifestyleLabel =
+      root.querySelector(
+        '#bi-lifestyle-current'
+      );
+
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    if (
+      originalHero
+    ) {
+
+      setImage(
+        heroImage,
+        originalHero
+      );
+
+    }
+
+
+
+    /* =====================================================
+       TOP ADVENTURES GALLERY
+       
+       Current fallback = Banff.
+       ===================================================== */
+
+    getTopGalleryData(
+
+      '/adventures',
+
+      SECTION_FALLBACKS
+        .adventures
+
+    )
+    .then(
+      function(data) {
+
+        if (
+          data.photo
+        ) {
+
+          setImage(
+            adventureImage,
+            data.photo
+          );
+
+
+          /*
+             Use latest Adventure photo as hero fallback
+             if current homepage has no photo.
+          */
+
+          if (
+            heroImage &&
+            !heroImage.src
+          ) {
+
+            setImage(
+              heroImage,
+              data.photo
+            );
+
+          }
+
+        }
+
+
+        setCurrentGallery(
+          adventureLabel,
+          data.title
+        );
+
+      }
+    );
+
+
+
+    /* =====================================================
+       TOP LIFESTYLE GALLERY
+       ===================================================== */
+
+    getTopGalleryData(
+
+      '/lifestyle',
+
+      SECTION_FALLBACKS
+        .lifestyle
+
+    )
+    .then(
+      function(data) {
+
+        if (
+          data.photo
+        ) {
+
+          setImage(
+            lifestyleImage,
+            data.photo
+          );
+
+        }
+
+
+        setCurrentGallery(
+          lifestyleLabel,
+          data.title
+        );
+
+      }
+    );
+
+
+
+    /* =====================================================
+       EXPLORE BUTTON
+       ===================================================== */
+
+    const sections =
+      root.querySelector(
+        '#bi-home-sections'
+      );
+
+
+    const explore =
+      root.querySelector(
+        '#bi-home-scroll-cue'
+      );
+
+
+    explore.addEventListener(
+      'click',
+      function() {
+
+        root.scrollTo({
+
+          top:
+            sections.offsetTop,
+
+          behavior:
+            'smooth'
+
+        });
+
+      }
+    );
+
+
+
+    setupHomeAnimations(
+      root
+    );
+
+
+    setupPageTransitions(
+      root
+    );
+
+  }
+
+
+
+  /* =========================================================
+     HOME ANIMATIONS
+     ========================================================= */
+
+  function setupHomeAnimations(
+    root
+  ) {
+
+    const hero =
+      root.querySelector(
+        '#bi-home-hero'
+      );
+
+
+    const media =
+      root.querySelector(
+        '#bi-home-hero-media'
+      );
+
+
+    const copy =
+      root.querySelector(
+        '#bi-home-hero-copy'
+      );
+
+
+    const nav =
+      root.querySelector(
+        '#bi-home-nav'
+      );
+
+
+    const cards =
+      Array.from(
+        root.querySelectorAll(
+          '.bi-home-category'
+        )
+      );
+
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+
+
+
+    /* =====================================================
+       CARD REVEAL
+       ===================================================== */
+
+    if (
+      'IntersectionObserver'
+      in window
+    ) {
+
+      const observer =
+        new IntersectionObserver(
+
+          function(entries) {
+
+            entries.forEach(
+              function(entry) {
+
+                if (
+                  !entry.isIntersecting
+                ) {
+
+                  return;
+
+                }
+
+
+                entry.target
+                  .classList
+                  .add(
+                    'bi-revealed'
+                  );
+
+
+                observer.unobserve(
+                  entry.target
+                );
+
+              }
+            );
+
+          },
+
+          {
+
+            root:
+              root,
+
+            threshold:
+              .16
+
+          }
+
+        );
+
+
+      cards.forEach(
+        function(card) {
+
+          observer.observe(
+            card
+          );
+
+        }
+      );
+
+
+    } else {
+
+      cards.forEach(
+        function(card) {
+
+          card.classList.add(
+            'bi-revealed'
+          );
+
+        }
+      );
+
+    }
+
+
+
+    if (
+      reducedMotion
+    ) {
+
+      return;
+
+    }
+
+
+
+    /* =====================================================
+       PARALLAX
+       ===================================================== */
+
+    let ticking =
+      false;
+
+
+    root.addEventListener(
+
+      'scroll',
+
+      function() {
+
+        if (
+          ticking
+        ) {
+
+          return;
+
+        }
+
+
+        ticking =
+          true;
+
+
+        requestAnimationFrame(
+          function() {
+
+            const scrollY =
+              root.scrollTop;
+
+
+            const heroHeight =
+              hero.offsetHeight;
+
+
+            const progress =
+              Math.min(
+                Math.max(
+                  scrollY /
+                  heroHeight,
+                  0
+                ),
+                1
+              );
+
+
+
+            media.style.transform =
+
+              `translate3d(
+                0,
+                ${scrollY * .13}px,
+                0
+              )`;
+
+
+
+            copy.style.opacity =
+
+              String(
+                Math.max(
+                  0,
+                  1 -
+                  progress * 1.8
+                )
+              );
+
+
+
+            copy.style.transform =
+
+              `translate(
+                -50%,
+                calc(
+                  -50%
+                  - ${progress * 22}px
+                )
+              )`;
+
+
+
+            /*
+               Show floating navigation once user
+               leaves the clean opening hero.
+            */
+
+            if (
+              scrollY >
+              heroHeight * .52
+            ) {
+
+              nav.classList.add(
+                'bi-visible'
+              );
+
+
+            } else {
+
+              nav.classList.remove(
+                'bi-visible'
+              );
+
+            }
+
+
+            ticking =
+              false;
+
+          }
+        );
+
+      },
+
+      {
+        passive:
+          true
+      }
+
+    );
+
+  }
+
+
+
+  /* =========================================================
+     PAGE TRANSITIONS
+     ========================================================= */
+
+  function setupPageTransitions(
+    root
+  ) {
+
+    const overlay =
+      root.querySelector(
+        '#bi-home-transition'
+      );
+
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+
+
+
+    root
+      .querySelectorAll(
+        '[data-bi-transition]'
+      )
+      .forEach(
+        function(link) {
+
+          link.addEventListener(
+            'click',
+            function(event) {
+
+              if (
+                reducedMotion
+              ) {
+
+                return;
+
+              }
+
+
+              event.preventDefault();
+
+
+              const destination =
+                link.href;
+
+
+              link.classList.add(
+                'bi-opening'
+              );
+
+
+              overlay.classList.add(
+                'bi-active'
+              );
+
+
+              window.setTimeout(
+                function() {
+
+                  window.location.href =
+                    destination;
+
+                },
+                300
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+
+  /* =========================================================
+     REMOVE HOME
+     ========================================================= */
+
+  function unmountHome() {
+
+    document.documentElement
+      .classList
+      .remove(
+        'bi-home-mode'
+      );
+
+
+    document.body
+      .classList
+      .remove(
+        'bi-home-mode'
+      );
+
+
+    const root =
+      document.getElementById(
+        'bi-mobile-home'
+      );
+
+
+    if (
+      root
+    ) {
+
+      root.remove();
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     ROUTER
+     ========================================================= */
+
+  function routeHome() {
+
+    if (
+      isMobile() &&
+      isHome()
+    ) {
+
+      mountHome();
+
+      return;
+
+    }
+
+
+    unmountHome();
+
+  }
+
+
+
+  /* =========================================================
+     INIT
+     ========================================================= */
+
+  function initHome() {
+
+    routeHome();
+
+  }
+
+
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+
+      'DOMContentLoaded',
+
+      initHome,
+
+      {
+        once:
+          true
+      }
+
+    );
+
+
+  } else {
+
+    initHome();
+
+  }
+
+
+
+  /* =========================================================
+     SAFARI BACK / FORWARD
+     ========================================================= */
+
+  window.addEventListener(
+    'pageshow',
+    routeHome
+  );
+
+
+  window.addEventListener(
+    'popstate',
+    routeHome
+  );
+
+
+
+  /* =========================================================
+     ROTATION / RESIZE
+     ========================================================= */
+
+  let biHomeResizeTimer;
+
+
+  window.addEventListener(
+
+    'resize',
+
+    function() {
+
+      clearTimeout(
+        biHomeResizeTimer
+      );
+
+
+      biHomeResizeTimer =
+        setTimeout(
+          routeHome,
+          120
+        );
+
+    },
+
+    {
+      passive:
+        true
+    }
+
+  );
+
+
+})();
+
+</script>
